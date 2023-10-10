@@ -29,7 +29,7 @@ SECRET_KEY = '(wgq&6oz40p0^vzc0aia=e$2qox*3j&qdo04t8^*eta4l0!n^f'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['8000-karlryan0-foragersfrien-ardtm131x7a.ws-eu105.gitpod.io', 'localhost']
+ALLOWED_HOSTS = ['8000-karlryan0-foragersfrien-ardtm131x7a.ws-eu105.gitpod.io', 'localhost', 'foragers-friend-5b6ca9d8e935.herokuapp.com']
 
 
 # Application definition
