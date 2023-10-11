@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from cloudinary.models import CloudinaryField
+from django_countries.fields import CountryField
 
 # Create your models here.
 
@@ -9,6 +10,7 @@ TYPE_CHOICE = [
     ('Blackberries', 'Blackberries'),
     ('Nettles', 'Nettles'),
 ]
+
 
 STATUS = ((0, "Unconfirmed"), (1, "Confirmed"))
 
@@ -20,6 +22,7 @@ class Location(models.Model):
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
     longitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
+    country = CountryField(blank=True)
 
     def __str__(self):
         return self.type
