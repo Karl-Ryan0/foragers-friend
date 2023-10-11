@@ -19,6 +19,7 @@ if os.path.isfile('env.py'):
 BASE_DIR = Path(__file__).resolve().parent.parent
 TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 
+CSRF_TRUSTED_ORIGINS = ['https://8000-karlryan0-foragersfrien-ardtm131x7a.ws-eu105.gitpod.io']
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
