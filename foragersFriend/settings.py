@@ -34,6 +34,8 @@ ALLOWED_HOSTS = ['8000-karlryan0-foragersfrien-ardtm131x7a.ws-eu105.gitpod.io', 
 
 # Application definition
 
+GDAL_LIBRARY_PATH = 'foragersFriend/GDAL/gdal.dll'
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
