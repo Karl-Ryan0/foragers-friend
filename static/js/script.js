@@ -21,7 +21,7 @@ mymap.on('click', function (e) {
     let popupButton = document.querySelector('#popup-button');
     popupButton.addEventListener('click', function () {
         // Redirect to the 'add_item' page when the button is clicked
-        window.location.href = '/add_item/';
+        window.location.href = `/add_item/?latitude=${lat}&longitude=${lon}`;
     });
 
     // Populate the latitude and longitude fields in the form with the selected coordinates
@@ -30,4 +30,6 @@ mymap.on('click', function (e) {
     console.log('Latitude: ' + lat + ', Longitude: ' + lon);
 });
 
-
+const urlParams = new URLSearchParams(window.location.search);
+document.querySelector('#id_latitude').value = urlParams.get('latitude');
+document.querySelector('#id_longitude').value = urlParams.get('longitude');

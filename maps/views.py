@@ -19,12 +19,12 @@ def input_location(request):
 
     return render(request, 'input_location.html', {'form': form})
 
-def add_item_view(request):
+def add_item(request):
     if request.method == 'POST':
         form = LocationForm(request.POST)
         if form.is_valid():
             form.save()  # Save the item to the database
-            return redirect('success_page')  # Redirect to a success page
+            return redirect('index.html')  # Redirect to a success page
     else:
         form = LocationForm()
 

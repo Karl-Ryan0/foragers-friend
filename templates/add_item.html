@@ -4,12 +4,22 @@
 
 {% block content %}
 <h2>Add New Item</h2>
-<form method="post">
+<form method="post" action="{% url 'add_item' %}">
     {% csrf_token %}
     {{ form.as_p }}
 
-    <!-- Add more form fields for the item you want to add -->
-    
+    <label for="id_latitude">Latitude:</label>
+    <input type="text" id="id_latitude" name="latitude" readonly>
+
+    <label for="id_longitude">Longitude:</label>
+    <input type="text" id="id_longitude" name="longitude" readonly>
+
     <button type="submit">Submit</button>
 </form>
+
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    document.querySelector('#id_latitude').value = urlParams.get('latitude');
+    document.querySelector('#id_longitude').value = urlParams.get('longitude');
+</script>
 {% endblock %}
