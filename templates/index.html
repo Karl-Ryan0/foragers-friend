@@ -7,5 +7,16 @@
 <hr>
 <p>This is the home page content.</p>
 <hr>
-<div id="map"></div>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <input type="hidden" id="id_latitude" name="latitude">
+    <input type="hidden" id="id_longitude" name="longitude">
+
+    <!-- Display a Leaflet map where users can select their location -->
+    <div id="map"></div>
+
+    <button type="submit">Submit</button>
+</form>
 {% endblock %}
