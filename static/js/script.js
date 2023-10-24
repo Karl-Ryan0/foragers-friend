@@ -8,8 +8,8 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 // Add an event listener to the map to capture coordinates when a user clicks
 mymap.on('click', function (e) {
-    var lat = e.latlng.lat;
-    var lon = e.latlng.lng;
+    var lat = e.latlng.lat.toFixed(3);
+    var lon = e.latlng.lng.toFixed(3);
     // Populate the latitude and longitude fields in the form with the selected coordinates
     document.querySelector('#id_latitude').value = lat;
     document.querySelector('#id_longitude').value = lon;
