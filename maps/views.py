@@ -23,8 +23,8 @@ def add_item(request):
     if request.method == 'POST':
         form = LocationForm(request.POST)
         if form.is_valid():
-            form.save()  # Save the item to the database
-            return redirect('index.html')  # Redirect to a success page
+            form.save()
+            return redirect('/')
     else:
         form = LocationForm()
 

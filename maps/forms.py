@@ -1,4 +1,5 @@
 from django import forms
+from .models import Location
 
 TYPE_CHOICE = [
     ('Strawberries', 'Strawberries'),
@@ -6,8 +7,8 @@ TYPE_CHOICE = [
     ('Nettles', 'Nettles'),
 ]
 
-class LocationForm(forms.Form):
-    name = forms.CharField(max_length=100, label='Name', required=True)
-    description = forms.CharField(widget=forms.Textarea, label='Description')
-    type = forms.ChoiceField(choices=TYPE_CHOICE, label='Type')
+class LocationForm(forms.ModelForm):
+    class Meta:
+        model = Location
+        fields = ['name', 'description', 'type']
 

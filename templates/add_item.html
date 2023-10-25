@@ -9,10 +9,10 @@
     {{ form.as_p }}
 
     <label for="id_latitude">Latitude:</label>
-    <input type="text" id="id_latitude" name="latitude" readonly>
-
+    <input type="text" id="id_latitude" name="latitude" value="{{ form.latitude.value }}" readonly>
+    
     <label for="id_longitude">Longitude:</label>
-    <input type="text" id="id_longitude" name="longitude" readonly>
+    <input type="text" id="id_longitude" name="longitude" value="{{ form.longitude.value }}" readonly>
 
     <button type="submit">Submit</button>
 </form>

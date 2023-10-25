@@ -16,13 +16,9 @@ STATUS = ((0, "Unconfirmed"), (1, "Confirmed"))
 
 
 class Location(models.Model):
+    name = models.CharField(max_length=100, default='placeholder')
+    description = models.TextField(default='placeholder')
     type = models.CharField(max_length=20, choices=TYPE_CHOICE)
-    created_on = models.DateTimeField(auto_now_add=True)
-    status = models.IntegerField(choices=STATUS, default=0)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
-    latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
-    longitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
-    country = CountryField(blank=True)
 
     def __str__(self):
-        return self.type
+        return self.name

@@ -4,8 +4,8 @@ from .models import Location
 # Register your models here.
 
 class LocationAdmin(admin.ModelAdmin):
-    list_display = ('type', 'created_on', 'status', 'created_by', 'country')
-    list_filter = ('type', 'status')
-    search_fields = ('type', 'created_by__username')
+    list_display = ('name', 'description', 'type')
+    list_filter = ('type', 'name')
+    search_fields = ('type', 'name')
 
 admin.site.register(Location, LocationAdmin)
