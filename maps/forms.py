@@ -10,5 +10,5 @@ TYPE_CHOICE = [
 class LocationForm(forms.ModelForm):
     class Meta:
         model = Location
-        fields = ['name', 'description', 'type']
+        fields = ['name', 'description', 'type', 'latitude', 'longitude']
 
