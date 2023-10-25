@@ -23,6 +23,8 @@ def add_item(request):
     if request.method == 'POST':
         form = LocationForm(request.POST)
         if form.is_valid():
+            latitude = request.POST['latitude']
+            longitude = request.POST['longitude']
             form.save()
             return redirect('/')
     else:
