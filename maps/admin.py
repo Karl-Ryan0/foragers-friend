@@ -5,7 +5,7 @@ from .models import Location
 
 class LocationAdmin(admin.ModelAdmin):
     list_display = ('name', 'description', 'type')
-    list_filter = ('type', 'name')
+    list_filter = ('type', 'name', 'verified')
     search_fields = ('type', 'name')
 
 admin.site.register(Location, LocationAdmin)

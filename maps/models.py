@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from cloudinary.models import CloudinaryField
+from datetime import datetime
 
 # Create your models here.
 
@@ -21,7 +22,7 @@ class Location(models.Model):
     latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True)
     longitude = models.DecimalField(max_digits=9, decimal_places=6, null=True)
     verified = models.BooleanField(default=False)
-    created_on = models.DateTimeField(auto_now_add=True)
+    created_on = models.DateTimeField(default=datetime.now, blank=True)
 
     def __str__(self):
         return self.name
