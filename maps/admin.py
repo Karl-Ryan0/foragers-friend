@@ -4,7 +4,7 @@ from .models import Location
 # Register your models here.
 
 class LocationAdmin(admin.ModelAdmin):
-    list_display = ('name', 'description', 'type')
+    list_display = ('name', 'description', 'type', 'verified')
     list_filter = ('type', 'name', 'verified')
     search_fields = ('type', 'name')
 
