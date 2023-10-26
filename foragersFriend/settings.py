@@ -19,7 +19,8 @@ if os.path.isfile('env.py'):
 BASE_DIR = Path(__file__).resolve().parent.parent
 TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 
-CSRF_TRUSTED_ORIGINS = ['https://8000-karlryan0-foragersfrien-ardtm131x7a.ws-eu105.gitpod.io']
+CSRF_TRUSTED_ORIGINS = [
+    'https://8000-karlryan0-foragersfrien-ardtm131x7a.ws-eu105.gitpod.io']
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -30,7 +31,8 @@ SECRET_KEY = '(wgq&6oz40p0^vzc0aia=e$2qox*3j&qdo04t8^*eta4l0!n^f'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['8000-karlryan0-foragersfrien-ardtm131x7a.ws-eu105.gitpod.io', 'localhost', 'foragers-friend-5b6ca9d8e935.herokuapp.com']
+ALLOWED_HOSTS = ['8000-karlryan0-foragersfrien-ardtm131x7a.ws-eu105.gitpod.io',
+                 'localhost', 'foragers-friend-5b6ca9d8e935.herokuapp.com']
 
 
 # Application definition
@@ -43,10 +45,14 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'django.contrib.sites',
     'cloudinary_storage',
     'django.contrib.staticfiles',
     'django_countries',
     'cloudinary',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
     'maps',
 ]
 
@@ -58,9 +64,15 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'foragersFriend.urls'
+
+SITE_ID = 1
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 
 TEMPLATES = [
     {
@@ -134,7 +146,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-STATIC_ROOT =  os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = '/media/'
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
