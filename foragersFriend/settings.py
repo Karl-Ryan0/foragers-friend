@@ -31,8 +31,7 @@ SECRET_KEY = '(wgq&6oz40p0^vzc0aia=e$2qox*3j&qdo04t8^*eta4l0!n^f'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['8000-karlryan0-foragersfrien-ardtm131x7a.ws-eu105.gitpod.io',
-                 'localhost', 'foragers-friend-5b6ca9d8e935.herokuapp.com']
+ALLOWED_HOSTS = ['8000-karlryan0-foragersfrien-ardtm131x7a.ws-eu105.gitpod.io', 'localhost', 'foragers-friend-5b6ca9d8e935.herokuapp.com']
 
 
 # Application definition
@@ -62,6 +61,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.sites.middleware.CurrentSiteMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware',
@@ -69,7 +69,9 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'foragersFriend.urls'
 
-SITE_ID = 1
+SITE_ID = 2
+
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'http'
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
