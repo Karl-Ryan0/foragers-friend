@@ -1,7 +1,5 @@
 // Initialize the map
 let mymap = L.map('map').setView([53.608, -6.191], 13);
-let data = JSON.parse(document.getElementById('databaseData').textContent);
-console.log(data);
 
 // Add a tile layer (map provider)
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
