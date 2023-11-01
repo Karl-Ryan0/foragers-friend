@@ -4,6 +4,12 @@
 
 {% block content %}
 <h2>Welcome to My Site</h2>
+<h2>Location List</h2>
+<ul>
+    {% for location in locations %}
+    <li>{{ location.name }} - {{ location.type }} - {{ location.latitude }}, {{ location.longitude }}</li>
+    {% endfor %}
+</ul>
 <hr>
 <p>This is the home page content.</p>
 <hr>

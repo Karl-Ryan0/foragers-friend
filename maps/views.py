@@ -6,7 +6,11 @@ from .models import Location
 
 
 def homepage(request):
-    return render(request, "index.html")
+    locations = Location.objects.all()
+
+    return render(request, 'index.html', {'locations': locations})
+
+
 
 
 def input_location(request):
@@ -47,7 +51,11 @@ def register(request):
 
     return render(request, 'register.html', {'form': form})
 
-def locationsList(request):
-    data_from_database = YourModel.objects.all()
-    return render(request, 'index.html', {'data_from_database': data_from_database})
+def location_list(request):
+    # Retrieve all Location objects from the database
+    locations = Location.objects.all()
+
+    # Pass the 'locations' queryset to the template
+    return render(request, 'index.html', {'locations': locations})
+
 
