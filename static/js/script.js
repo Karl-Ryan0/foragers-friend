@@ -1,10 +1,14 @@
 // Initialize the map
 let mymap = L.map('map').setView([53.608, -6.191], 13);
+let data = JSON.parse(document.getElementById('databaseData').textContent);
+console.log(data);
 
 // Add a tile layer (map provider)
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
 }).addTo(mymap);
+
+L.marker([53.608, -6.191]).addTo(mymap).bindPopup("This is the marker's popup.");
 
 // Add an event listener to the map to capture coordinates when a user clicks
 mymap.on('click', function (e) {

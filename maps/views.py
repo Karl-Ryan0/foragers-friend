@@ -1,6 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 from .forms import LocationForm
+from .models import Location
 # Create your views here.
 
 
@@ -45,3 +46,8 @@ def register(request):
         form = UserCreationForm()
 
     return render(request, 'register.html', {'form': form})
+
+def locationsList(request):
+    data_from_database = YourModel.objects.all()
+    return render(request, 'index.html', {'data_from_database': data_from_database})
+
