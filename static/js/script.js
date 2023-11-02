@@ -35,3 +35,6 @@ mymap.on('click', function (e) {
 const urlParams = new URLSearchParams(window.location.search);
 document.querySelector('#id_latitude').value = urlParams.get('latitude');
 document.querySelector('#id_longitude').value = urlParams.get('longitude');
+
+
+

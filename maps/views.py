@@ -10,6 +10,10 @@ def homepage(request):
 
     return render(request, 'index.html', {'locations': locations})
 
+def about(request):
+
+    return render(request, 'about.html')
+
 
 
 
