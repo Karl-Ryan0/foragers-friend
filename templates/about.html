@@ -3,25 +3,22 @@
 {% block title %}Home | My Site{% endblock %}
 
 {% block content %}
-<h2>Welcome to My Site</h2>
-<h2>Location List</h2>
-<ul>
-    {% for location in locations %}
-    <li>{{ location.name }} - {{ location.type }} - {{ location.latitude }}, {{ location.longitude }}</li>
-    {% endfor %}
-</ul>
-<hr>
-<p>This is the home page content.</p>
-<hr>
-<form method="post">
-    {% csrf_token %}
 
-    <input type="hidden" id="id_latitude" name="latitude">
-    <input type="hidden" id="id_longitude" name="longitude">
-</form>
-<!-- Display a Leaflet map where users can select their location -->
-<div id="mapbox">
-    <div id="map"></div>
+
+<hr>
+<div class="about">
+    <h3>Welcome to my website! My name is Karl and I have been foraging for several years for homebrew and cooking.</h3>
+    <p>
+        On the map, there are various icons that will point you to locations nearby, as well as any warnings you might
+        need. At the moment there are only categories for
+        blackberries, nettles and strawberries, but more will be added in the future!
+    </p>
+
+    <form method="post" action="{% url 'about' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
 </div>
 
 

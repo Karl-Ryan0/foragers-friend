@@ -1,6 +1,6 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
-from .forms import LocationForm
+from .forms import LocationForm, ContactForm
 from .models import Location
 # Create your views here.
 
@@ -10,11 +10,10 @@ def homepage(request):
 
     return render(request, 'index.html', {'locations': locations})
 
+
 def about(request):
 
     return render(request, 'about.html')
-
-
 
 
 def input_location(request):
@@ -55,6 +54,7 @@ def register(request):
 
     return render(request, 'register.html', {'form': form})
 
+
 def location_list(request):
     # Retrieve all Location objects from the database
     locations = Location.objects.all()
@@ -62,4 +62,21 @@ def location_list(request):
     # Pass the 'locations' queryset to the template
     return render(request, 'index.html', {'locations': locations})
 
+
+from django.shortcuts import render, redirect
+from .forms import ContactForm
+
+def about(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            email = form.cleaned_data['email']
+            subject = form.cleaned_data['subject']
+            message = form.cleaned_data['message']
+            ContactMessage.objects.create(name=name, email=email, subject=subject, message=message)
+            return redirect('contact_success')
+    else:
+        form = ContactForm()
+    return render(request, 'about.html', {'form': form})
 
