@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 from .forms import LocationForm, ContactForm
-from .models import Location
+from .models import Location, ContactMessage
 # Create your views here.
 
 
@@ -75,7 +75,7 @@ def about(request):
             subject = form.cleaned_data['subject']
             message = form.cleaned_data['message']
             ContactMessage.objects.create(name=name, email=email, subject=subject, message=message)
-            return redirect('contact_success')
+            return redirect('/')
     else:
         form = ContactForm()
     return render(request, 'about.html', {'form': form})

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Location
+from .models import Location, ContactMessage
 
 # Register your models here.
 
@@ -9,3 +9,8 @@ class LocationAdmin(admin.ModelAdmin):
     search_fields = ('type', 'name')
 
 admin.site.register(Location, LocationAdmin)
+
+class ContactMessageAdmin(admin.ModelAdmin):
+    list_display = ('subject', 'name', 'email', 'created_at')
+
+admin.site.register(ContactMessage, ContactMessageAdmin)
