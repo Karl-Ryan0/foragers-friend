@@ -74,7 +74,7 @@ def about(request):
             email = form.cleaned_data['email']
             subject = form.cleaned_data['subject']
             message = form.cleaned_data['message']
-            ContactMessage.objects.create(name=name, email=email, subject=subject, message=message)
+            
             return redirect('/')
     else:
         form = ContactForm()
