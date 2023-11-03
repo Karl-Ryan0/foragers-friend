@@ -73,8 +73,8 @@ SITE_ID = 2
 
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'http'
 
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = 'login_success'
+LOGOUT_REDIRECT_URL = 'logout_success'
 
 TEMPLATES = [
     {

@@ -1,6 +1,7 @@
 from django import forms
 from .models import Location
 from django.contrib.auth.forms import AuthenticationForm
+from allauth.account.forms import LoginForm
 
 TYPE_CHOICE = [
     ('Strawberries', 'Strawberries'),
@@ -24,4 +25,11 @@ class ContactForm(forms.Form):
     email = forms.EmailField()
     subject = forms.CharField(max_length=200)
     message = forms.CharField(widget=forms.Textarea)
+
+class CustomLoginForm(LoginForm):
+    def __init__(self, *args, **kwargs):
+        super(CustomLoginForm, self).__init__(*args, **kwargs)
+
+    def login(self, request, redirect_url=None):
+        return super(CustomLoginForm, self).login(request, redirect_url)
 

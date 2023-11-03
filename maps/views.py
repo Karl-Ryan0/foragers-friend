@@ -1,9 +1,10 @@
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
 from django.shortcuts import render, redirect
 from .forms import LocationForm, ContactForm
 from .models import Location, ContactMessage
 from django.contrib.auth.views import LoginView
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 # Create your views here.
 
 
@@ -85,14 +86,36 @@ def about(request):
 
 def login(request):
     if request.method == 'POST':
-        form = CustomLoginForm(request, request.POST)
+        form = AuthenticationForm(request, request.POST)
         if form.is_valid():
             user = form.get_user()
             login(request, user)
             
-            return redirect('/')
+            return redirect('login_success')
     else:
-        form = CustomLoginForm()
+        form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
 
+def login_view(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            messages.success(request, 'You have logged in successfully.')
+            return redirect('login_success')
+        else:
+            messages.error(request, 'Login was not successful. Please check your credentials.')
+    return render(request, 'login.html')
 
+
+def logout_view(request):
+    logout(request)
+    messages.success(request, 'You have logged out successfully.')
+    return redirect('logout_success')
+
+def login_success(request):
+    return render(request, 'account/login_success.html')
+
+def logout_success(request):
+    return render(request, 'account/logout_success.html')
