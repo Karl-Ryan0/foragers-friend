@@ -2,6 +2,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 from .forms import LocationForm, ContactForm
 from .models import Location, ContactMessage
+from django.contrib.auth.views import LoginView
+from django.contrib.auth import login
 # Create your views here.
 
 
@@ -79,4 +81,18 @@ def about(request):
     else:
         form = ContactForm()
     return render(request, 'about.html', {'form': form})
+
+
+def login(request):
+    if request.method == 'POST':
+        form = CustomLoginForm(request, request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            
+            return redirect('/')
+    else:
+        form = CustomLoginForm()
+    return render(request, 'login.html', {'form': form})
+
 

@@ -1,5 +1,6 @@
 from django import forms
 from .models import Location
+from django.contrib.auth.forms import AuthenticationForm
 
 TYPE_CHOICE = [
     ('Strawberries', 'Strawberries'),
