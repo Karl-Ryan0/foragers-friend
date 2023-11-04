@@ -1,13 +1,15 @@
 from django import forms
 from .models import Location
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from allauth.account.forms import LoginForm
+from django.contrib.auth.models import User
 
 TYPE_CHOICE = [
     ('Strawberries', 'Strawberries'),
     ('Blackberries', 'Blackberries'),
     ('Nettles', 'Nettles'),
 ]
+
 
 class LocationForm(forms.ModelForm):
     class Meta:
@@ -26,6 +28,7 @@ class ContactForm(forms.Form):
     subject = forms.CharField(max_length=200)
     message = forms.CharField(widget=forms.Textarea)
 
+
 class CustomLoginForm(LoginForm):
     def __init__(self, *args, **kwargs):
         super(CustomLoginForm, self).__init__(*args, **kwargs)
@@ -33,3 +36,11 @@ class CustomLoginForm(LoginForm):
     def login(self, request, redirect_url=None):
         return super(CustomLoginForm, self).login(request, redirect_url)
 
+
+class RegistrationForm(UserCreationForm):
+    email = forms.EmailField(
+        required=True, help_text='Required. Enter a valid email address.')
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password1', 'password2']

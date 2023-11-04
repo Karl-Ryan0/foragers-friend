@@ -1,7 +1,8 @@
+from .forms import ContactForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.shortcuts import render, redirect
-from .forms import LocationForm, ContactForm
+from .forms import LocationForm, ContactForm, RegistrationForm
 from .models import Location, ContactMessage
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import login, logout
@@ -66,9 +67,6 @@ def location_list(request):
     return render(request, 'index.html', {'locations': locations})
 
 
-from django.shortcuts import render, redirect
-from .forms import ContactForm
-
 def about(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
@@ -77,7 +75,8 @@ def about(request):
             email = form.cleaned_data['email']
             subject = form.cleaned_data['subject']
             message = form.cleaned_data['message']
-            ContactMessage.objects.create(name=name, email=email, subject=subject, message=message)
+            ContactMessage.objects.create(
+                name=name, email=email, subject=subject, message=message)
             return redirect('/')
     else:
         form = ContactForm()
@@ -90,11 +89,12 @@ def login(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            
+
             return redirect('login_success')
     else:
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
+
 
 def login_view(request):
     if request.method == 'POST':
@@ -105,7 +105,8 @@ def login_view(request):
             messages.success(request, 'You have logged in successfully.')
             return redirect('login_success')
         else:
-            messages.error(request, 'Login was not successful. Please check your credentials.')
+            messages.error(
+                request, 'Login was not successful. Please check your credentials.')
     return render(request, 'login.html')
 
 
@@ -114,8 +115,23 @@ def logout_view(request):
     messages.success(request, 'You have logged out successfully.')
     return redirect('logout_success')
 
+
 def login_success(request):
     return render(request, 'account/login_success.html')
 
+
 def logout_success(request):
     return render(request, 'account/logout_success.html')
+
+
+def register(request):
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('home')
+    else:
+        form = RegistrationForm()
+
+    return render(request, 'accounts/signup.html', {'form': form})
