@@ -1,5 +1,6 @@
 from .forms import ContactForm
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from .forms import LocationForm, ContactForm, RegistrationForm
@@ -135,3 +136,10 @@ def register(request):
         form = RegistrationForm()
 
     return render(request, 'accounts/signup.html', {'form': form})
+
+@login_required
+def my_account(request):
+    user = request.user
+    locations = Location.objects.filter(user=user)
+
+    return render(request, '/workspace/foragers-friend/templates/account/my_account.html', {'locations': locations})

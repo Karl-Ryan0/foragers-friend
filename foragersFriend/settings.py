@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://8000-karlryan0-foragersfrien-ardtm131x7a.ws-eu105.gitpod.io']
+    'https://8000-karlryan0-foragersfrien-ardtm131x7a.ws-eu106.gitpod.io']
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -31,7 +31,7 @@ SECRET_KEY = '(wgq&6oz40p0^vzc0aia=e$2qox*3j&qdo04t8^*eta4l0!n^f'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['8000-karlryan0-foragersfrien-ardtm131x7a.ws-eu105.gitpod.io', 'localhost', 'foragers-friend-5b6ca9d8e935.herokuapp.com']
+ALLOWED_HOSTS = ['8000-karlryan0-foragersfrien-ardtm131x7a.ws-eu106.gitpod.io', 'localhost', 'foragers-friend-5b6ca9d8e935.herokuapp.com']
 
 
 # Application definition

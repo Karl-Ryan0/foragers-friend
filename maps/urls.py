@@ -12,5 +12,6 @@ urlpatterns = [
     path('account/login_success/', views.login_success, name='login_success'),
     path('account/logout_success/', views.logout_success, name='logout_success'),
     path('signup/', views.register, name='signup'),
+    path('account/my_account/', views.my_account, name='my_account'),
     
 ]
