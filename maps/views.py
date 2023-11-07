@@ -2,8 +2,8 @@ from .forms import ContactForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.shortcuts import render, redirect
-from .forms import LocationForm, ContactForm, RegistrationForm
+from django.shortcuts import render, redirect, get_object_or_404
+from .forms import LocationForm, ContactForm, RegistrationForm, LocationEditForm
 from .models import Location, ContactMessage
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import login, logout
@@ -40,6 +40,7 @@ def add_item(request):
         if form.is_valid():
             latitude = request.POST['latitude']
             longitude = request.POST['longitude']
+            Location.user = request.user
             form.save()
             return redirect('/')
     else:
@@ -143,3 +144,27 @@ def my_account(request):
     locations = Location.objects.filter(user=user)
 
     return render(request, '/workspace/foragers-friend/templates/account/my_account.html', {'locations': locations})
+
+
+def edit_location(request, location_id):
+    location = get_object_or_404(Location, id=location_id)
+    
+    if request.method == 'POST':
+        form = LocationEditForm(request.POST, instance=location)
+        if form.is_valid():
+            form.save()
+            return redirect('my_account')
+    else:
+        form = LocationEditForm(instance=location)
+
+    return render(request, 'edit_location.html', {'form': form, 'location': location})
+
+
+def delete_location(request, location_id):
+    location = get_object_or_404(Location, id=location_id)
+
+    if request.method == 'POST':
+        location.delete()
+        return redirect('my_account')
+
+    return render(request, 'delete_location.html', {'location': location})

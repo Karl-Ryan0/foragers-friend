@@ -4,8 +4,19 @@
     <h2>My Account</h2>
     <h3>My Locations</h3>
     <ul>
-      {% for location in locations %}
-        <li>{{ location.name }} - {{ location.description }}</li>
+        {% for location in locations %}
+        <div class="location-item">
+          <h3>{{ location.name }}</h3>
+          <p>{{ location.description }}</p>
+          <p>Type: {{ location.type }}</p>
+          <p>Latitude: {{ location.latitude }}</p>
+          <p>Longitude: {{ location.longitude }}</p>
+          <a href="{% url 'edit_location' location.id %}" class="btn btn-primary">Edit</a>
+          <form method="post" action="{% url 'delete_location' location.id %}" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Delete</button>
+          </form>
+        </div>
       {% endfor %}
     </ul>
   </div>

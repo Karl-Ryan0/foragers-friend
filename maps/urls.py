@@ -13,5 +13,7 @@ urlpatterns = [
     path('account/logout_success/', views.logout_success, name='logout_success'),
     path('signup/', views.register, name='signup'),
     path('account/my_account/', views.my_account, name='my_account'),
+    path('edit_location/<int:location_id>/', views.edit_location, name='edit_location'),
+    path('delete_location/<int:location_id>/', views.delete_location, name='delete_location'),
     
 ]
