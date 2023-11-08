@@ -16,6 +16,7 @@
             {% csrf_token %}
             <button type="submit" class="btn btn-danger">Delete</button>
           </form>
+          <a href="{% url 'delete_account' %}" class="btn btn-danger">Delete My Account</a>
         </div>
       {% endfor %}
     </ul>

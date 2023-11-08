@@ -138,6 +138,7 @@ def register(request):
 
     return render(request, 'accounts/signup.html', {'form': form})
 
+
 @login_required
 def my_account(request):
     user = request.user
@@ -148,7 +149,7 @@ def my_account(request):
 
 def edit_location(request, location_id):
     location = get_object_or_404(Location, id=location_id)
-    
+
     if request.method == 'POST':
         form = LocationEditForm(request.POST, instance=location)
         if form.is_valid():
@@ -168,3 +169,13 @@ def delete_location(request, location_id):
         return redirect('my_account')
 
     return render(request, 'delete_location.html', {'location': location})
+
+
+@login_required
+def delete_account(request):
+    if request.method == 'POST':
+        request.user.delete()
+        logout(request)
+        return redirect('home')
+    else:
+        return render(request, 'account/delete_account.html')
