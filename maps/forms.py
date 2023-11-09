@@ -4,12 +4,6 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from allauth.account.forms import LoginForm
 from django.contrib.auth.models import User
 
-# TYPE_CHOICE = [
-#     ('Strawberries', 'Strawberries'),
-#     ('Blackberries', 'Blackberries'),
-#     ('Nettles', 'Nettles'),
-# ]
-
 
 class LocationForm(forms.ModelForm):
     class Meta:

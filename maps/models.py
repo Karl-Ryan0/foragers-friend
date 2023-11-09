@@ -5,15 +5,6 @@ from datetime import datetime
 
 # Create your models here.
 
-TYPE_CHOICE = [
-    ('Strawberries', 'Strawberries'),
-    ('Blackberries', 'Blackberries'),
-    ('Nettles', 'Nettles'),
-]
-
-
-STATUS = ((0, "Unconfirmed"), (1, "Confirmed"))
-
 class LocationType(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
