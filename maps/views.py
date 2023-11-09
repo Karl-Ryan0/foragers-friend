@@ -34,14 +34,15 @@ def input_location(request):
     return render(request, 'input_location.html', {'form': form})
 
 
+@login_required
 def add_item(request):
     if request.method == 'POST':
         form = LocationForm(request.POST)
         if form.is_valid():
-            latitude = request.POST['latitude']
-            longitude = request.POST['longitude']
-            Location.user = request.user
-            form.save()
+            new_location = form.save(commit=False)
+            new_location.user = request.user
+            new_location.save()
+            form.save_m2m()
             return redirect('/')
     else:
         form = LocationForm()
