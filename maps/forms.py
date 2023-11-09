@@ -14,8 +14,7 @@ from django.contrib.auth.models import User
 class LocationForm(forms.ModelForm):
     class Meta:
         model = Location
-        # fields = ['name', 'description', 'type', 'latitude', 'longitude']
-        fields = ['name', 'description', 'latitude', 'longitude']
+        fields = ['name', 'description', 'type', 'latitude', 'longitude']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
