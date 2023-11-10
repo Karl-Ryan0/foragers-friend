@@ -16,7 +16,7 @@ mymap.on('click', function (e) {
     // Create a popup with coordinates
     L.popup()
         .setLatLng(e.latlng)
-        .setContent('Latitude: ' + lat + '<br>Longitude: ' + lon + '<br><button type="button" id="popup-button">Add location</button>')
+        .setContent('Latitude: ' + lat + '<br>Longitude: ' + lon + '<br><button type="button" id="popup-button" class="btn btn-primary">Add location</button>')
         .openOn(mymap);
 
     // Attach a click event to the popup button
