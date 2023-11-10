@@ -6,7 +6,21 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
 }).addTo(mymap);
 
-L.marker([53.608, -6.191]).addTo(mymap).bindPopup("This is the marker's popup.");
+// Attempt to get the user's current position
+mymap.locate({setView: true, maxZoom: 16, watch: false, enableHighAccuracy: true});
+
+// Event when location is found
+mymap.on('locationfound', function(e) {
+    // Add a marker to the user's location
+    L.marker(e.latlng).addTo(mymap)
+        .bindPopup("You are here!");
+});
+
+// Event when location is not found (or access is denied)
+mymap.on('locationerror', function(e) {
+    // Set a default view if we can't get the user's location
+    mymap.setView([53.608, -6.191], 13);
+});
 
 // Add an event listener to the map to capture coordinates when a user clicks
 mymap.on('click', function (e) {
