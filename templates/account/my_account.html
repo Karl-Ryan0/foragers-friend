@@ -1,24 +1,35 @@
 {% extends "base.html" %}
 {% block content %}
-  <div class="container">
-    <h2>My Account</h2>
-    <h3>My Locations</h3>
-    <ul>
-        {% for location in locations %}
-        <div class="location-item">
-          <h3>{{ location.name }}</h3>
-          <p>{{ location.description }}</p>
-          <p>Type: {{ location.type }}</p>
-          <p>Latitude: {{ location.latitude }}</p>
-          <p>Longitude: {{ location.longitude }}</p>
+<div class="container">
+  <h2>My Account</h2>
+  <h3>My Locations</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Description</th>
+        <th>Type</th>
+        <th>Location</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for location in locations %}
+      <tr class="location-item">
+        <td>{{ location.description }}</td>
+        <td>{{ location.type }}</td>
+        <td>{{ location.latitude }} {{ location.longitude }}</td>
+        <td>
           <a href="{% url 'edit_location' location.id %}" class="btn btn-primary">Edit</a>
           <form method="post" action="{% url 'delete_location' location.id %}" style="display: inline;">
             {% csrf_token %}
             <button type="submit" class="btn btn-danger">Delete</button>
           </form>
-        </div>
+        </td>
+      </tr>
       {% endfor %}
-    </ul>
-    <a href="{% url 'delete_account' %}" class="btn btn-danger">Delete My Account</a>
-  </div>
+    </tbody>
+  </table>
+  <hr>
+  <a href="{% url 'delete_account' %}" class="btn btn-danger">Delete My Account</a>
+</div>
 {% endblock %}
