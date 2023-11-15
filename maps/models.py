@@ -14,8 +14,8 @@ class LocationType(models.Model):
 
 
 class Location(models.Model):
-    name = models.CharField(max_length=100, default='placeholder')
-    description = models.TextField(default='placeholder')
+    name = models.CharField(max_length=100)
+    description = models.TextField()
     type = models.ForeignKey('LocationType', on_delete=models.CASCADE)
     latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True)
     longitude = models.DecimalField(max_digits=9, decimal_places=6, null=True)
