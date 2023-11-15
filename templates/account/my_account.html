@@ -2,7 +2,6 @@
 {% block content %}
 <div class="container">
   <h2>My Account</h2>
-  <h3>My Locations</h3>
   <table>
     <thead>
       <tr>
@@ -13,7 +12,7 @@
       </tr>
     </thead>
     <tbody>
-      {% for location in locations %}
+      {% for location in page_obj %}
       <tr class="location-item">
         <td>{{ location.description }}</td>
         <td>{{ location.type }}</td>
@@ -29,6 +28,19 @@
       {% endfor %}
     </tbody>
   </table>
+  <div>
+    {% if page_obj.has_previous %}
+      <a href="?page=1">First</a>
+      <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+    {% endif %}
+
+    <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+
+    {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}">Next</a>
+      <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+    {% endif %}
+  </div>
   <hr>
   <a href="{% url 'delete_account' %}" class="btn btn-danger">Delete My Account</a>
 </div>

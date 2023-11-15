@@ -7,6 +7,7 @@ from .forms import LocationForm, ContactForm, RegistrationForm, LocationEditForm
 from .models import Location, ContactMessage
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import login, logout
+from django.core.paginator import Paginator
 # Create your views here.
 
 
@@ -141,9 +142,13 @@ def register(request):
 @login_required
 def my_account(request):
     user = request.user
-    locations = Location.objects.filter(user=user)
+    location_list = Location.objects.filter(user=user)
+    paginator = Paginator(location_list, 15)
 
-    return render(request, '/workspace/foragers-friend/templates/account/my_account.html', {'locations': locations})
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'account/my_account.html', {'page_obj': page_obj})
 
 
 def edit_location(request, location_id):
@@ -178,3 +183,5 @@ def delete_account(request):
         return redirect('home')
     else:
         return render(request, 'account/delete_account.html')
+
+
