@@ -119,12 +119,10 @@ def logout_view(request):
     return redirect('logout_success')
 
 
-def login_success(request):
-    return render(request, 'account/login_success.html')
+def auth_success(request, action):
+    template = 'account/' + action + '_success.html'
+    return render(request, template)
 
-
-def logout_success(request):
-    return render(request, 'account/logout_success.html')
 
 
 def register(request):
