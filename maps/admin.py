@@ -4,9 +4,9 @@ from .models import Location, ContactMessage, LocationType
 # Register your models here.
 
 class LocationAdmin(admin.ModelAdmin):
-    list_display = ('name','type', 'description', 'verified')
-    list_filter = ('type', 'name', 'verified')
-    search_fields = ('type', 'name', 'verified')
+    list_display = ('notes','type', 'verified')
+    list_filter = ('type', 'verified')
+    search_fields = ('type', 'verified')
 
 admin.site.register(Location, LocationAdmin)
 

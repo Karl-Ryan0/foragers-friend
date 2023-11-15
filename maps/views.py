@@ -125,7 +125,6 @@ def auth_success(request, action):
     return render(request, template)
 
 
-
 def register(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
@@ -183,5 +182,3 @@ def delete_account(request):
         return redirect('home')
     else:
         return render(request, 'account/delete_account.html')
-
-

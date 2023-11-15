@@ -1,11 +1,26 @@
-h1 {
-    color:blue;
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
-.footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+footer {
+    flex-shrink: 0;
+    margin-top: 20px;
+}
+
+
+h1 {
+    color:blue;
 }
 
 #map {
@@ -32,6 +47,8 @@ th {
 td {
     max-width: 150px;
 }
+
+
 
 
 

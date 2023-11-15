@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 class LocationForm(forms.ModelForm):
     class Meta:
         model = Location
-        fields = ['name', 'description', 'type', 'latitude', 'longitude']
+        fields = ['notes', 'type', 'latitude', 'longitude']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -42,4 +42,4 @@ class RegistrationForm(UserCreationForm):
 class LocationEditForm(forms.ModelForm):
     class Meta:
         model = Location
-        fields = ['name', 'description']
+        fields = ['type', 'notes']
