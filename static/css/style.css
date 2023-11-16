@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
     height: 100%;
     margin: 0;
     padding: 0;
@@ -7,6 +8,13 @@ html, body {
 body {
     display: flex;
     flex-direction: column;
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+}
+
+h3 {
+    font-size: large;
+    padding-top: 50px;
 }
 
 main {
@@ -16,11 +24,6 @@ main {
 footer {
     flex-shrink: 0;
     margin-top: 20px;
-}
-
-
-h1 {
-    color:blue;
 }
 
 #map {
@@ -33,7 +36,8 @@ table {
     border-collapse: collapse;
 }
 
-th, td {
+th,
+td {
     border: 1px solid #ccc;
     padding: 8px;
     text-align: left;
@@ -58,7 +62,8 @@ form {
     border-radius: 4px;
 }
 
-form p, form label {
+form p,
+form label {
     margin-bottom: 15px;
 }
 
@@ -106,7 +111,7 @@ form button[type="submit"]:focus {
     outline: 3px solid #007bff;
 }
 
-
-
-
-
+.mt-3 > a {
+    font-size: 30px;
+    padding: 5px;
+}
