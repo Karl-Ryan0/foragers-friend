@@ -48,6 +48,63 @@ td {
     max-width: 150px;
 }
 
+/* Basic Form Styling */
+form {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+form p, form label {
+    margin-bottom: 15px;
+}
+
+form input[type="text"],
+form input[type="number"],
+form input[type="email"],
+form input[type="password"],
+form textarea,
+form select {
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+form textarea {
+    height: 150px;
+    resize: vertical;
+}
+
+/* Submit Button Styling */
+form button[type="submit"] {
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    form {
+        width: 90%;
+        padding: 15px;
+    }
+}
+
+#delete_button {
+    background: #fff;
+    border: none;
+    padding: 0;
+}
+
+
+form input:focus,
+form textarea:focus,
+form select:focus,
+form button[type="submit"]:focus {
+    outline: 3px solid #007bff;
+}
 
 
 

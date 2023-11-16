@@ -3,12 +3,15 @@
 {% block title %}Home | My Site{% endblock %}
 
 {% block content %}
-<h2>Welcome to My Site</h2>
-<h2>Location List</h2>
+<h3>Welcome to my website! My name is Karl and I have been foraging for several years for homebrew and cooking.</h3>
 <hr>
-<p>This is the home page content.</p>
+<p>
+    On the map, there are various icons that will point you to locations nearby, as well as any warnings you might
+    need. At the moment there are only categories for
+    blackberries, nettles and strawberries, but more will be added in the future!
+</p>
 <hr>
-<form method="post">
+<form method="post" style="display: none;">
     {% csrf_token %}
 
     <input type="hidden" id="id_latitude" name="latitude">

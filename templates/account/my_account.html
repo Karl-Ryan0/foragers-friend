@@ -5,8 +5,8 @@
   <table>
     <thead>
       <tr>
-        <th>Description</th>
         <th>Type</th>
+        <th>Notes</th>
         <th>Location</th>
         <th>Actions</th>
       </tr>
@@ -14,12 +14,12 @@
     <tbody>
       {% for location in page_obj %}
       <tr class="location-item">
-        <td>{{ location.description }}</td>
         <td>{{ location.type }}</td>
+        <td>{{ location.notes }}</td>
         <td>{{ location.latitude }} {{ location.longitude }}</td>
         <td>
           <a href="{% url 'edit_location' location.id %}" class="btn btn-primary">Edit</a>
-          <form method="post" action="{% url 'delete_location' location.id %}" style="display: inline;">
+          <form id="delete_button" method="post" action="{% url 'delete_location' location.id %}" style="display: inline;">
             {% csrf_token %}
             <button type="submit" class="btn btn-danger">Delete</button>
           </form>
