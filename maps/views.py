@@ -73,8 +73,10 @@ def register(request):
 
 
 def location_data(request):
-    locations = Location.objects.all().values('type', 'latitude', 'longitude')
-    location_list = list(locations)
+    locations = Location.objects.all().select_related('type').values(
+        'latitude', 'longitude', 'notes', 'type'
+    )
+    location_list = list(locations)  # Convert QuerySet to list for JSON serialization
     return JsonResponse(location_list, safe=False)
 
 

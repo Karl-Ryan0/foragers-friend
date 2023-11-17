@@ -55,14 +55,24 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('current-year').textContent = new Date().getFullYear();
 });
 
+const typeMapping = {
+    1: 'Strawberries',
+    2: 'Blackberries',
+    3: 'Elderberries',
+    4: 'Garlic',
+    5: 'Nettles'
+};
+
+
 function fetchLocationsAndUpdateMap() {
-    fetch('/location-data/')
+    fetch('/location-data')
         .then(response => response.json())
         .then(locations => {
             locations.forEach(location => {
+                let typeName = typeMapping[location.type] || 'Unknown Type';
                 L.marker([location.latitude, location.longitude])
                     .addTo(mymap)
-                    .bindPopup(location.type);
+                    .bindPopup(`<b>Type:</b> ${typeName}<br><b>Notes:</b> ${location.notes}`);
             });
         })
         .catch(error => console.error('Error fetching location data:', error));
