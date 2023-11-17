@@ -115,3 +115,23 @@ form button[type="submit"]:focus {
     font-size: 30px;
     padding: 5px;
 }
+
+.location-popup{
+    border-radius: 3px;
+    text-align: center;
+}
+
+.leaflet-popup-content-wrapper {
+    color: #000;
+    border: 1px solid #000;
+    text-align: center;
+}
+
+.leaflet-popup-content-wrapper hr {
+    color: #000;
+    margin: 0.5em 0;
+}
+
+.nav-link {
+    color: #000;
+}

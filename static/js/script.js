@@ -72,7 +72,7 @@ function fetchLocationsAndUpdateMap() {
                 let typeName = typeMapping[location.type] || 'Unknown Type';
                 L.marker([location.latitude, location.longitude])
                     .addTo(mymap)
-                    .bindPopup(`<b>Type:</b> ${typeName}<br><b>Notes:</b> ${location.notes}`);
+                    .bindPopup(`<b>${typeName}</b><hr> ${location.notes}`, {className: 'location-popup'});
             });
         })
         .catch(error => console.error('Error fetching location data:', error));
