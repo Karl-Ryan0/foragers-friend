@@ -8,6 +8,7 @@ from .models import Location, ContactMessage
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import login, logout
 from django.core.paginator import Paginator
+from django.http import JsonResponse
 # Create your views here.
 
 
@@ -63,12 +64,18 @@ def register(request):
     return render(request, 'register.html', {'form': form})
 
 
-def location_list(request):
-    # Retrieve all Location objects from the database
-    locations = Location.objects.all()
+# def location_list(request):
+#     # Retrieve all Location objects from the database
+#     locations = Location.objects.all()
 
-    # Pass the 'locations' queryset to the template
-    return render(request, 'index.html', {'locations': locations})
+#     # Pass the 'locations' queryset to the template
+#     return render(request, 'index.html', {'locations': locations})
+
+
+def location_data(request):
+    locations = Location.objects.all().values('type', 'latitude', 'longitude')
+    location_list = list(locations)
+    return JsonResponse(location_list, safe=False)
 
 
 def about(request):

@@ -55,3 +55,18 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('current-year').textContent = new Date().getFullYear();
 });
 
+function fetchLocationsAndUpdateMap() {
+    fetch('/location-data/')
+        .then(response => response.json())
+        .then(locations => {
+            locations.forEach(location => {
+                L.marker([location.latitude, location.longitude])
+                    .addTo(mymap)
+                    .bindPopup(location.type);
+            });
+        })
+        .catch(error => console.error('Error fetching location data:', error));
+}
+
+// Call the function to update the map
+fetchLocationsAndUpdateMap();
