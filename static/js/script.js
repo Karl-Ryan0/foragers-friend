@@ -72,7 +72,7 @@ function fetchLocationsAndUpdateMap() {
                 let typeName = typeMapping[location.type] || 'Unknown Type';
                 L.marker([location.latitude, location.longitude])
                     .addTo(mymap)
-                    .bindPopup(`<b>${typeName}</b><hr> ${location.notes}`, {className: 'location-popup'});
+                    .bindPopup(`<b>${typeName}</b><hr>${location.notes}<hr><button onclick="toggleFavorite(${location.id})">Add to Favorites</button>`);
             });
         })
         .catch(error => console.error('Error fetching location data:', error));
@@ -80,3 +80,23 @@ function fetchLocationsAndUpdateMap() {
 
 // Call the function to update the map
 fetchLocationsAndUpdateMap();
+
+function toggleFavorite(locationId) {
+    fetch(`/toggle-favorite/${locationId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            throw new Error('Network response was not ok.');
+        }
+    })
+    .then(data => {
+        console.log('Favorite status toggled', data);
+    })
+    .catch(error => console.error('Error toggling favorite:', error));
+}

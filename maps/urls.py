@@ -18,4 +18,5 @@ urlpatterns = [
     path('delete_location/<int:location_id>/', views.delete_location, name='delete_location'),
     path('delete_account/', views.delete_account, name='delete_account'),
     path('location-data/', views.location_data, name='location-data'),
+    path('toggle-favorite/<int:location_id>', views.toggle_favorite, name='toggle-favorite'),
 ]

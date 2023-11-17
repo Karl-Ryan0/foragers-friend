@@ -9,6 +9,7 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth import login, logout
 from django.core.paginator import Paginator
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 
 
@@ -74,7 +75,7 @@ def register(request):
 
 def location_data(request):
     locations = Location.objects.all().select_related('type').values(
-        'latitude', 'longitude', 'notes', 'type'
+        'latitude', 'longitude', 'notes', 'type', 'id'
     )
     location_list = list(locations)  # Convert QuerySet to list for JSON serialization
     return JsonResponse(location_list, safe=False)
@@ -191,3 +192,24 @@ def delete_account(request):
         return redirect('home')
     else:
         return render(request, 'account/delete_account.html')
+
+@csrf_exempt
+def toggle_favorite(request, location_id):
+    if request.method == 'POST':
+        location = get_object_or_404(Location, id=location_id)
+        user = request.user
+
+        if user.is_authenticated:
+            if user in location.favorited_by.all():
+                location.favorited_by.remove(user)
+            else:
+                location.favorited_by.add(user)
+
+            return JsonResponse({'status': 'success'})
+        else:
+            return JsonResponse({'status': 'error', 'message': 'User not authenticated'}, status=401)
+    else:
+        return JsonResponse({'status': 'error', 'message': 'Invalid request'}, status=400)
+
+
+
