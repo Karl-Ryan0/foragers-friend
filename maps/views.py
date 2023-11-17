@@ -152,12 +152,17 @@ def register(request):
 def my_account(request):
     user = request.user
     location_list = Location.objects.filter(user=user)
+    favorite_locations = user.favorite_locations.all()
     paginator = Paginator(location_list, 15)
 
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    return render(request, 'account/my_account.html', {'page_obj': page_obj})
+    context = {
+        'page_obj': page_obj,
+        'favorite_locations': favorite_locations,
+    }
+    return render(request, 'account/my_account.html', context)
 
 
 def edit_location(request, location_id):
@@ -212,4 +217,8 @@ def toggle_favorite(request, location_id):
         return JsonResponse({'status': 'error', 'message': 'Invalid request'}, status=400)
 
 
-
+def remove_favorite(request, location_id):
+    if request.method == 'POST':
+        location = Location.objects.get(id=location_id)
+        request.user.favorite_locations.remove(location)
+    return redirect('my_account')

@@ -2,7 +2,7 @@ from django.urls import path
 from . import views
 from allauth.account.views import LoginView
 from .forms import CustomLoginForm
-from .views import auth_success
+from .views import auth_success, remove_favorite
 
 urlpatterns = [
     path("", views.homepage, name="home"),
@@ -19,4 +19,5 @@ urlpatterns = [
     path('delete_account/', views.delete_account, name='delete_account'),
     path('location-data/', views.location_data, name='location-data'),
     path('toggle-favorite/<int:location_id>', views.toggle_favorite, name='toggle-favorite'),
+    path('remove-favorite/<int:location_id>/', remove_favorite, name='remove_favorite'),
 ]

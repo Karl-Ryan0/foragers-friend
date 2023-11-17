@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container">
-  <h2>My Account</h2>
+  <h2>My Locations</h2>
   <table>
     <thead>
       <tr>
@@ -41,6 +41,39 @@
       <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
     {% endif %}
   </div>
+  <hr>
+  <h2>My Favorite Locations</h2>
+  <table>
+    <thead>
+        <tr>
+            <th>Type</th>
+            <th>Notes</th>
+            <th>Location</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for location in favorite_locations %}
+        <tr>
+            <td>{{ location.type }}</td>
+            <td>{{ location.notes }}</td>
+            <td>{{ location.latitude }} {{ location.longitude }}</td>
+            <td>
+              <form id="delete_button" method="post" action="{% url 'delete_location' location.id %}" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Remove Favorite</button>
+              </form>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">No favorite locations found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
   <hr>
   <a href="{% url 'delete_account' %}" class="btn btn-danger">Delete My Account</a>
 </div>
