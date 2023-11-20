@@ -1,3 +1,4 @@
+/* Global Styles */
 html,
 body {
     height: 100%;
@@ -12,11 +13,18 @@ body {
     text-align: center;
 }
 
+p {
+    padding: 0 0 0 0;
+    padding: 1.3em 5em
+}
+
+/* Header Styles */
 h3 {
     font-size: large;
     padding-top: 50px;
 }
 
+/* Main Content and Footer */
 main {
     flex: 1 0 auto;
 }
@@ -26,18 +34,19 @@ footer {
     margin-top: 20px;
 }
 
+/* Map Styling */
 #map {
-    height: 40vh;
+    height: 30rem;
     margin: 0 2%;
 }
 
+/* Table Styles */
 table {
     width: 100%;
     border-collapse: collapse;
 }
 
-th,
-td {
+th, td {
     border: 1px solid #ccc;
     padding: 8px;
     text-align: left;
@@ -52,7 +61,7 @@ td {
     max-width: 150px;
 }
 
-/* Basic Form Styling */
+/* Form Styling */
 form {
     max-width: 600px;
     margin: 20px auto;
@@ -62,11 +71,11 @@ form {
     border-radius: 4px;
 }
 
-form p,
-form label {
+form p, form label {
     margin-bottom: 15px;
 }
 
+/* Form Input Styles */
 form input[type="text"],
 form input[type="number"],
 form input[type="email"],
@@ -83,18 +92,11 @@ form textarea {
     resize: vertical;
 }
 
-/* Submit Button Styling */
+/* Button Styling */
 form button[type="submit"] {
     border-radius: 4px;
     cursor: pointer;
     transition: background 0.3s ease;
-}
-
-@media (max-width: 768px) {
-    form {
-        width: 90%;
-        padding: 15px;
-    }
 }
 
 #delete_button {
@@ -103,7 +105,7 @@ form button[type="submit"] {
     padding: 0;
 }
 
-
+/* Focus Styles */
 form input:focus,
 form textarea:focus,
 form select:focus,
@@ -111,12 +113,21 @@ form button[type="submit"]:focus {
     outline: 3px solid #007bff;
 }
 
+/* Media Queries */
+@media (max-width: 768px) {
+    form {
+        width: 90%;
+        padding: 15px;
+    }
+}
+
+/* Additional Styles */
 .mt-3 > a {
     font-size: 30px;
     padding: 5px;
 }
 
-.location-popup{
+.location-popup {
     border-radius: 3px;
     text-align: center;
 }
