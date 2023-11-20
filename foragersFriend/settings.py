@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://8000-karlryan0-foragersfrien-ardtm131x7a.ws-eu106.gitpod.io']
+    'https://8000-karlryan0-foragersfrien-ardtm131x7a.ws-eu106.gitpod.io', 'https://foragers-friend-5b6ca9d8e935.herokuapp.com/']
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
