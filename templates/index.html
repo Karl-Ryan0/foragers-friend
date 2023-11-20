@@ -1,26 +1,40 @@
 {% extends "base.html" %}
 
-{% block title %}Home | My Site{% endblock %}
+{% block title %}
+<!-- Title Block: Sets the title for the home page -->
+Home | My Site
+{% endblock %}
 
 {% block content %}
+<!-- Content Block: Main content of the home page -->
+
+<!-- Welcome Message -->
 <h3>Welcome to my website! My name is Karl and I have been foraging for several years for homebrew and cooking.</h3>
 <hr>
+
+<!-- Description Paragraph -->
 <p>
     On the map, there are various icons that will point you to locations nearby, as well as any warnings you might
     need. At the moment there are only categories for
     blackberries, nettles and strawberries, but more will be added in the future!
 </p>
 <hr>
+
+<!-- Hidden Form for Location Data -->
+<!-- This form is typically used to capture location data from the map and then post it to the server -->
 <form method="post" style="display: none;">
+    <!-- CSRF Token for Security -->
     {% csrf_token %}
 
+    <!-- Hidden Inputs for Latitude and Longitude -->
     <input type="hidden" id="id_latitude" name="latitude">
     <input type="hidden" id="id_longitude" name="longitude">
 </form>
-<!-- Display a Leaflet map where users can select their location -->
+
+<!-- Map Container -->
+<!-- This div holds the Leaflet map where users can view and interact with locations -->
 <div id="mapbox">
     <div id="map"></div>
 </div>
-
 
 {% endblock %}

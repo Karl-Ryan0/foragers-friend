@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container">
+  <!-- Section for Displaying User's Locations -->
   <h2>My Locations</h2>
   <table>
     <thead>
@@ -19,7 +20,8 @@
         <td>{{ location.latitude }} {{ location.longitude }}</td>
         <td>
           <a href="{% url 'edit_location' location.id %}" class="btn btn-primary">Edit</a>
-          <form id="delete_button" method="post" action="{% url 'delete_location' location.id %}" style="display: inline;">
+          <form id="delete_button" method="post" action="{% url 'delete_location' location.id %}"
+            style="display: inline;">
             {% csrf_token %}
             <button type="submit" class="btn btn-danger">Delete</button>
           </form>
@@ -28,53 +30,56 @@
       {% endfor %}
     </tbody>
   </table>
+  <!-- Pagination Links -->
   <div>
     {% if page_obj.has_previous %}
-      <a href="?page=1">First</a>
-      <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+    <a href="?page=1">First</a>
+    <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
     {% endif %}
 
     <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
 
     {% if page_obj.has_next %}
-      <a href="?page={{ page_obj.next_page_number }}">Next</a>
-      <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+    <a href="?page={{ page_obj.next_page_number }}">Next</a>
+    <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
     {% endif %}
   </div>
   <hr>
+  <!-- Section for Displaying Favorite Locations -->
   <h2>My Favorite Locations</h2>
   <table>
     <thead>
-        <tr>
-            <th>Type</th>
-            <th>Notes</th>
-            <th>Location</th>
-            <th>Actions</th>
-        </tr>
+      <tr>
+        <th>Type</th>
+        <th>Notes</th>
+        <th>Location</th>
+        <th>Actions</th>
+      </tr>
     </thead>
     <tbody>
-        {% for location in favorite_locations %}
-        <tr>
-            <td>{{ location.type }}</td>
-            <td>{{ location.notes }}</td>
-            <td>{{ location.latitude }} {{ location.longitude }}</td>
-            <td>
-              <form id="delete_button" method="post" action="{% url 'delete_location' location.id %}" style="display: inline;">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-danger">Remove Favorite</button>
-              </form>
-            </td>
-        </tr>
-        {% empty %}
-        <tr>
-            <td colspan="5">No favorite locations found.</td>
-        </tr>
-        {% endfor %}
+      {% for location in favorite_locations %}
+      <tr>
+        <td>{{ location.type }}</td>
+        <td>{{ location.notes }}</td>
+        <td>{{ location.latitude }} {{ location.longitude }}</td>
+        <td>
+          <form id="delete_button" method="post" action="{% url 'delete_location' location.id %}"
+            style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Remove Favorite</button>
+          </form>
+        </td>
+      </tr>
+      {% empty %}
+      <!-- Displayed if No Favorite Locations are Found -->
+      <tr>
+        <td colspan="5">No favorite locations found.</td>
+      </tr>
+      {% endfor %}
     </tbody>
-</table>
-
-
+  </table>
   <hr>
+  <!-- Account Deletion Button -->
   <a href="{% url 'delete_account' %}" class="btn btn-danger">Delete My Account</a>
 </div>
 {% endblock %}

@@ -63,7 +63,7 @@ const typeMapping = {
     5: 'Nettles'
 };
 
-
+// Fetches a list of locations from the database and updates the map
 function fetchLocationsAndUpdateMap() {
     fetch('/location-data')
         .then(response => response.json())
@@ -81,6 +81,7 @@ function fetchLocationsAndUpdateMap() {
 // Call the function to update the map
 fetchLocationsAndUpdateMap();
 
+// Allows user to mark a location as favorite
 function toggleFavorite(locationId) {
     fetch(`/toggle-favorite/${locationId}`, {
         method: 'POST',
