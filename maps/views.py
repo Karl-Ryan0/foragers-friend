@@ -10,28 +10,29 @@ from django.contrib.auth import login, logout
 from django.core.paginator import Paginator
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-# Create your views here.
 
 
 def homepage(request):
+    """
+    Render the homepage with a list of locations.
+    """
     locations = Location.objects.all()
 
     return render(request, 'index.html',
                   {'locations': locations})
 
 
-def about(request):
-
-    return render(request, 'about.html')
-
-
 def input_location(request):
+    """
+    Handle input for new location coordinates.
+
+    Will automatically pull location data to for the add_item.html page.
+    """
     if request.method == 'POST':
         form = LocationForm(request.POST)
         if form.is_valid():
             latitude = form.cleaned_data['latitude']
             longitude = form.cleaned_data['longitude']
-            # Process or save the coordinates as needed
     else:
         form = LocationForm()
 
@@ -40,6 +41,12 @@ def input_location(request):
 
 @login_required
 def add_item(request):
+    """
+    Handle the addition of a new location item.
+
+    This view requires the user to be logged in.
+    If not, user is redirected to the login page.
+    """
     if request.method == 'POST':
         form = LocationForm(request.POST)
         if form.is_valid():
@@ -54,19 +61,12 @@ def add_item(request):
     return render(request, 'add_item.html', {'form': form})
 
 
-def register(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('home')
-    else:
-        form = UserCreationForm()
-
-    return render(request, 'register.html', {'form': form})
-
-
 def location_data(request):
+    """
+    Return a JSON response with location data.
+
+    Fetches all locations and returns them in a JSON format.
+    """
     locations = Location.objects.all().select_related('type').values(
         'latitude', 'longitude', 'notes', 'type', 'id'
     )
@@ -75,6 +75,9 @@ def location_data(request):
 
 
 def about(request):
+    """
+    Render the 'about' page.
+    """
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
@@ -91,6 +94,9 @@ def about(request):
 
 
 def login(request):
+    """
+    Handles user login.
+    """
     if request.method == 'POST':
         form = AuthenticationForm(request, request.POST)
         if form.is_valid():
@@ -104,6 +110,11 @@ def login(request):
 
 
 def login_view(request):
+    """
+    Handle user login with additional messaging.
+
+    Similar to the 'login' view but adds success or error messages.
+    """
     if request.method == 'POST':
         form = AuthenticationForm(request, request.POST)
         if form.is_valid():
@@ -118,17 +129,28 @@ def login_view(request):
 
 
 def logout_view(request):
+    """
+    Handle user logout.
+
+    Logs out the user and redirects to a success page.
+    """
     logout(request)
     messages.success(request, 'You have logged out successfully.')
     return redirect('logout_success')
 
 
 def auth_success(request, action):
+    """
+    Display a success page for authentication actions.
+    """
     template = 'account/' + action + '_success.html'
     return render(request, template)
 
 
 def register(request):
+    """
+    Handle user registration with a custom form.
+    """
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
@@ -143,6 +165,12 @@ def register(request):
 
 @login_required
 def my_account(request):
+    """
+    Display the user's account page with their locations and favorites.
+
+    This view requires the user to be logged in. Displays a paginated list of
+    locations associated with the user and their favorite locations.
+    """
     user = request.user
     location_list = Location.objects.filter(user=user)
     favorite_locations = user.favorite_locations.all()
@@ -159,6 +187,9 @@ def my_account(request):
 
 
 def edit_location(request, location_id):
+    """
+    Handle editing of a specific location.
+    """
     location = get_object_or_404(Location, id=location_id)
 
     if request.method == 'POST':
@@ -174,6 +205,9 @@ def edit_location(request, location_id):
 
 
 def delete_location(request, location_id):
+    """
+    Handle deleting of a specific location.
+    """
     location = get_object_or_404(Location, id=location_id)
 
     if request.method == 'POST':
@@ -185,6 +219,9 @@ def delete_location(request, location_id):
 
 @login_required
 def delete_account(request):
+    """
+    Handle the deletion of the user's account.
+    """
     if request.method == 'POST':
         request.user.delete()
         logout(request)
@@ -195,6 +232,9 @@ def delete_account(request):
 
 @csrf_exempt
 def toggle_favorite(request, location_id):
+    """
+    Handles users toggling favorite items.
+    """
     if request.method == 'POST':
         location = get_object_or_404(Location, id=location_id)
         user = request.user
@@ -215,6 +255,9 @@ def toggle_favorite(request, location_id):
 
 
 def remove_favorite(request, location_id):
+    """
+    Handles users removing favorite items from account page.
+    """
     if request.method == 'POST':
         location = Location.objects.get(id=location_id)
         request.user.favorite_locations.remove(location)
