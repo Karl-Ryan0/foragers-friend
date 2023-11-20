@@ -16,7 +16,8 @@ from django.views.decorators.csrf import csrf_exempt
 def homepage(request):
     locations = Location.objects.all()
 
-    return render(request, 'index.html', {'locations': locations})
+    return render(request, 'index.html',
+                  {'locations': locations})
 
 
 def about(request):
@@ -65,19 +66,11 @@ def register(request):
     return render(request, 'register.html', {'form': form})
 
 
-# def location_list(request):
-#     # Retrieve all Location objects from the database
-#     locations = Location.objects.all()
-
-#     # Pass the 'locations' queryset to the template
-#     return render(request, 'index.html', {'locations': locations})
-
-
 def location_data(request):
     locations = Location.objects.all().select_related('type').values(
         'latitude', 'longitude', 'notes', 'type', 'id'
     )
-    location_list = list(locations)  # Convert QuerySet to list for JSON serialization
+    location_list = list(locations)
     return JsonResponse(location_list, safe=False)
 
 
@@ -119,8 +112,8 @@ def login_view(request):
             messages.success(request, 'You have logged in successfully.')
             return redirect('login_success')
         else:
-            messages.error(
-                request, 'Login was not successful. Please check your credentials.')
+            messages.error(request,
+                           'Login was not successful. Please check your credentials.')
     return render(request, 'login.html')
 
 
@@ -176,7 +169,8 @@ def edit_location(request, location_id):
     else:
         form = LocationEditForm(instance=location)
 
-    return render(request, 'edit_location.html', {'form': form, 'location': location})
+    return render(request, 'edit_location.html', {'form':
+                                                  form, 'location': location})
 
 
 def delete_location(request, location_id):
@@ -198,6 +192,7 @@ def delete_account(request):
     else:
         return render(request, 'account/delete_account.html')
 
+
 @csrf_exempt
 def toggle_favorite(request, location_id):
     if request.method == 'POST':
@@ -212,9 +207,11 @@ def toggle_favorite(request, location_id):
 
             return JsonResponse({'status': 'success'})
         else:
-            return JsonResponse({'status': 'error', 'message': 'User not authenticated'}, status=401)
+            return JsonResponse({'status': 'error', 'message':
+                                 'User not authenticated'}, status=401)
     else:
-        return JsonResponse({'status': 'error', 'message': 'Invalid request'}, status=400)
+        return JsonResponse({'status': 'error', 'message':
+                             'Invalid request'}, status=400)
 
 
 def remove_favorite(request, location_id):

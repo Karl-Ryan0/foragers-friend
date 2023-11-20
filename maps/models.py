@@ -21,7 +21,8 @@ class Location(models.Model):
     verified = models.BooleanField(default=False)
     created_on = models.DateTimeField(default=datetime.now, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    favorited_by = models.ManyToManyField(User, related_name='favorite_locations', blank=True)
+    favorited_by = models.ManyToManyField(
+        User, related_name='favorite_locations', blank=True)
 
     def __str__(self):
         return self.notes[:50]
