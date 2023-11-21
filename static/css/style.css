@@ -173,6 +173,12 @@ form button[type="submit"]:focus {
     background-color: #f8f9fa;
 }
 
+.leaflet-popup-content {
+    margin: 24px;
+    line-height: 1.4;
+    font-size: 1.4em;
+}
+
 .navbar-toggler:hover,
 .navbar-toggler:focus {
     background-color: #e2e6ea;

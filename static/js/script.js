@@ -30,7 +30,7 @@ mymap.on('click', function (e) {
     // Create a popup with coordinates
     L.popup()
         .setLatLng(e.latlng)
-        .setContent('Latitude: ' + lat + '<br>Longitude: ' + lon + '<br><button type="button" id="popup-button" class="btn btn-primary">Add location</button>')
+        .setContent('Latitude: ' + lat + '<hr>Longitude: ' + lon + '<hr><button type="button" id="popup-button" class="btn btn-primary">Add location</button>')
         .openOn(mymap);
 
     // Attach a click event to the popup button
@@ -72,7 +72,7 @@ function fetchLocationsAndUpdateMap() {
                 let typeName = typeMapping[location.type] || 'Unknown Type';
                 L.marker([location.latitude, location.longitude])
                     .addTo(mymap)
-                    .bindPopup(`<b>${typeName}</b><hr>${location.notes}<hr><button onclick="toggleFavorite(${location.id})">Add to Favorites</button>`);
+                    .bindPopup(`<b>${typeName}</b><hr>${location.notes}<hr><button class="btn btn-primary" onclick="toggleFavorite(${location.id})">Add to Favorites</button>`);
             });
         })
         .catch(error => console.error('Error fetching location data:', error));
