@@ -1,6 +1,6 @@
 // Initialize the map
 let mymap = L.map('map').setView([53.608, -6.191], 13);
-
+let userLocation = null;
 let allMarkers = [];
 
 // Add a tile layer (map provider)
@@ -16,6 +16,7 @@ mymap.on('locationfound', function(e) {
     // Add a marker to the user's location
     L.marker(e.latlng).addTo(mymap)
         .bindPopup("You are here!");
+        userLocation = e.latlng;
 });
 
 // Event when location is not found (or access is denied)
@@ -121,3 +122,12 @@ function filterMapByType() {
     fetchLocationsAndUpdateMap(filterUrl);
 }
 
+document.getElementById('add-location-btn').addEventListener('click', function() {
+    if (userLocation) {
+        let lat = userLocation.lat.toFixed(3);
+        let lon = userLocation.lng.toFixed(3);
+        window.location.href = `/add_item/?latitude=${lat}&longitude=${lon}`;
+    } else {
+        alert("Location not available. Please ensure your location services are enabled.");
+    }
+});
