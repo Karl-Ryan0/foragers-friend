@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import LocationForm, ContactForm, RegistrationForm, LocationEditForm
-from .models import Location, ContactMessage
+from .models import Location, ContactMessage, LocationType
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import login, logout
 from django.core.paginator import Paginator
@@ -17,9 +17,9 @@ def homepage(request):
     Render the homepage with a list of locations.
     """
     locations = Location.objects.all()
-
-    return render(request, 'index.html',
-                  {'locations': locations})
+    types = LocationType.objects.values_list('name', flat=True).distinct()
+    return render(request, 'index.html', {'locations': locations,
+                                          'types': types})
 
 
 def input_location(request):
@@ -262,3 +262,13 @@ def remove_favorite(request, location_id):
         location = Location.objects.get(id=location_id)
         request.user.favorite_locations.remove(location)
     return redirect('my_account')
+
+
+def get_filtered_locations(request):
+    type_name = request.GET.get('type')
+    if type_name:
+        locations = Location.objects.filter(type__name=type_name).values('latitude', 'longitude', 'type__name', 'notes', 'id')
+    else:
+        locations = Location.objects.all().values('latitude', 'longitude', 'type__name', 'notes', 'id')
+
+    return JsonResponse(list(locations), safe=False)

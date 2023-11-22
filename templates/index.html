@@ -18,7 +18,12 @@ Home | Forager's Friend
     blackberries, nettles and strawberries, but more will be added in the future!
 </p>
 <hr>
-
+<select id="typeFilter" onchange="filterMapByType()">
+    <option value="">All Types</option>
+    {% for type in types %}
+    <option value="{{ type }}">{{ type }}</option>
+    {% endfor %}
+</select>
 <!-- Hidden Form for Location Data -->
 <!-- This form is typically used to capture location data from the map and then post it to the server -->
 <form method="post" style="display: none;">

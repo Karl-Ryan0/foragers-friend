@@ -1,6 +1,8 @@
 // Initialize the map
 let mymap = L.map('map').setView([53.608, -6.191], 13);
 
+let allMarkers = [];
+
 // Add a tile layer (map provider)
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
@@ -64,21 +66,29 @@ const typeMapping = {
 };
 
 // Fetches a list of locations from the database and updates the map
-function fetchLocationsAndUpdateMap() {
-    fetch('/location-data')
+function fetchLocationsAndUpdateMap(url = '/location-data') {
+    fetch(url)
         .then(response => response.json())
         .then(locations => {
+            // Clear existing markers
+            allMarkers.forEach(marker => mymap.removeLayer(marker));
+            allMarkers = [];
+
+            // Add new markers
             locations.forEach(location => {
-                let typeName = typeMapping[location.type] || 'Unknown Type';
-                L.marker([location.latitude, location.longitude])
-                    .addTo(mymap)
-                    .bindPopup(`<b>${typeName}</b><hr>${location.notes}<hr><button class="btn btn-primary" onclick="toggleFavorite(${location.id})">Add to Favorites</button>`);
+                // Directly use the type name if available
+                let typeName = location.type__name || 'Unknown Type';
+                let marker = L.marker([location.latitude, location.longitude])
+                              .addTo(mymap)
+                              .bindPopup(`<b>${typeName}</b><hr>${location.notes || ''}<hr><button class="btn btn-primary" onclick="toggleFavorite(${location.id})">Add to Favorites</button>`);
+                allMarkers.push(marker);
             });
         })
         .catch(error => console.error('Error fetching location data:', error));
 }
 
-// Call the function to update the map
+
+// Call the function to update the map with initial data
 fetchLocationsAndUpdateMap();
 
 // Allows user to mark a location as favorite
@@ -101,3 +111,13 @@ function toggleFavorite(locationId) {
     })
     .catch(error => console.error('Error toggling favorite:', error));
 }
+
+function filterMapByType() {
+    var selectedType = document.getElementById('typeFilter').value;
+    var filterUrl = selectedType ? '/get_filtered_locations?type=' + selectedType : '/location-data';
+    
+
+    // Call the function to fetch and update the map with filtered data
+    fetchLocationsAndUpdateMap(filterUrl);
+}
+

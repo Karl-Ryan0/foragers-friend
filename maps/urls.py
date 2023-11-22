@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 from allauth.account.views import LoginView
-from .views import auth_success, remove_favorite
+from .views import auth_success, remove_favorite, get_filtered_locations
 
 urlpatterns = [
     path("", views.homepage, name="home"),
@@ -25,4 +25,6 @@ urlpatterns = [
          views.toggle_favorite, name='toggle-favorite'),
     path('remove-favorite/<int:location_id>/',
          remove_favorite, name='remove_favorite'),
+    path('get_filtered_locations', get_filtered_locations,
+         name='get_filtered_locations'),
 ]
