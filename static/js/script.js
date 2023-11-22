@@ -4,7 +4,7 @@ let userLocation = null;
 let allMarkers = [];
 var defaultIcon = L.icon({
     iconUrl: 'static/media/images/default.png',
-    iconSize: [25, 41],
+    iconSize: [40, 60],
     iconAnchor: [12, 41],
     popupAnchor: [1, -34]
 });
@@ -79,20 +79,25 @@ function fetchLocationsAndUpdateMap(url = '/location-data') {
             allMarkers = [];
 
             locations.forEach(location => {
-                let typeInfo = typeMapping[location.type];
-                if (!typeInfo || !typeInfo.icon || !typeInfo.icon.options.iconUrl) {
-                    console.error(`Missing or invalid icon for type: ${location.type}`);
-                    typeInfo = { name: 'Unknown Type', icon: defaultIcon };
+                let typeName, typeInfo;
+
+                if (location.type__name) {
+                    typeName = location.type__name;
+                    typeInfo = Object.values(typeMapping).find(info => info.name === typeName) || { icon: defaultIcon };
+                } else {
+                    typeInfo = typeMapping[location.type] || { icon: defaultIcon };
+                    typeName = typeInfo.name || 'Unknown Type';
                 }
 
                 let marker = L.marker([location.latitude, location.longitude], { icon: typeInfo.icon })
                               .addTo(mymap)
-                              .bindPopup(`<b>${typeInfo.name}</b><hr>${location.notes || 'No additional information available.'}<hr><button class="btn btn-primary" onclick="toggleFavorite(${location.id})">Add to Favorites</button>`);
+                              .bindPopup(`<b>${typeName}</b><hr>${location.notes || 'No additional information available.'}<hr><button class="btn btn-primary" onclick="toggleFavorite(${location.id})">Add to Favorites</button>`);
                 allMarkers.push(marker);
             });
         })
         .catch(error => console.error('Error fetching location data:', error));
 }
+
 
 // Call the function to update the map with initial data
 fetchLocationsAndUpdateMap();
