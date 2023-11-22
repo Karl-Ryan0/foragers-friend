@@ -2,6 +2,12 @@
 let mymap = L.map('map').setView([53.608, -6.191], 13);
 let userLocation = null;
 let allMarkers = [];
+var defaultIcon = L.icon({
+    iconUrl: 'static/media/images/default.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34]
+});
 
 // Add a tile layer (map provider)
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -14,8 +20,6 @@ mymap.locate({setView: true, maxZoom: 16, watch: false, enableHighAccuracy: true
 // Event when location is found
 mymap.on('locationfound', function(e) {
     // Add a marker to the user's location
-    L.marker(e.latlng).addTo(mymap)
-        .bindPopup("You are here!");
         userLocation = e.latlng;
 });
 
@@ -59,11 +63,11 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 const typeMapping = {
-    1: 'Strawberries',
-    2: 'Blackberries',
-    3: 'Elderberries',
-    4: 'Garlic',
-    5: 'Nettles'
+    1: { name: 'Strawberries', icon: L.icon({ iconUrl: 'static/media/images/strawberries.png', iconSize: [40, 60], iconAnchor: [12, 41], popupAnchor: [1, -34] }) },
+    2: { name: 'Blackberries', icon: L.icon({ iconUrl: 'static/media/images/blackberries.png', iconSize: [40, 60], iconAnchor: [12, 41], popupAnchor: [1, -34] }) },
+    3: { name: 'Elderberries', icon: L.icon({ iconUrl: 'static/media/images/elderberries.png', iconSize: [40, 60], iconAnchor: [12, 41], popupAnchor: [1, -34] }) },
+    4: { name: 'Garlic', icon: L.icon({ iconUrl: 'static/media/images/garlic.png', iconSize: [40, 60], iconAnchor: [12, 41], popupAnchor: [1, -34] }) },
+    5: { name: 'Nettles', icon: L.icon({ iconUrl: 'static/media/images/nettles.png', iconSize: [40, 60], iconAnchor: [12, 41], popupAnchor: [1, -34] }) },
 };
 
 // Fetches a list of locations from the database and updates the map
@@ -71,23 +75,24 @@ function fetchLocationsAndUpdateMap(url = '/location-data') {
     fetch(url)
         .then(response => response.json())
         .then(locations => {
-            // Clear existing markers
             allMarkers.forEach(marker => mymap.removeLayer(marker));
             allMarkers = [];
 
-            // Add new markers
             locations.forEach(location => {
-                // Directly use the type name if available
-                let typeName = location.type__name || 'Unknown Type';
-                let marker = L.marker([location.latitude, location.longitude])
+                let typeInfo = typeMapping[location.type];
+                if (!typeInfo || !typeInfo.icon || !typeInfo.icon.options.iconUrl) {
+                    console.error(`Missing or invalid icon for type: ${location.type}`);
+                    typeInfo = { name: 'Unknown Type', icon: defaultIcon };
+                }
+
+                let marker = L.marker([location.latitude, location.longitude], { icon: typeInfo.icon })
                               .addTo(mymap)
-                              .bindPopup(`<b>${typeName}</b><hr>${location.notes || ''}<hr><button class="btn btn-primary" onclick="toggleFavorite(${location.id})">Add to Favorites</button>`);
+                              .bindPopup(`<b>${typeInfo.name}</b><hr>${location.notes || 'No additional information available.'}<hr><button class="btn btn-primary" onclick="toggleFavorite(${location.id})">Add to Favorites</button>`);
                 allMarkers.push(marker);
             });
         })
         .catch(error => console.error('Error fetching location data:', error));
 }
-
 
 // Call the function to update the map with initial data
 fetchLocationsAndUpdateMap();
@@ -116,7 +121,6 @@ function toggleFavorite(locationId) {
 function filterMapByType() {
     var selectedType = document.getElementById('typeFilter').value;
     var filterUrl = selectedType ? '/get_filtered_locations?type=' + selectedType : '/location-data';
-    
 
     // Call the function to fetch and update the map with filtered data
     fetchLocationsAndUpdateMap(filterUrl);
