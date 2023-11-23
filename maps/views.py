@@ -209,19 +209,16 @@ def edit_location(request, location_id):
 
 
 @login_required
+@login_required
 def delete_location(request, location_id):
-    """
-    Handle deleting of a specific location.
-    """
     location = get_object_or_404(Location, id=location_id)
 
-    # Check if the logged-in user is the one who created the location
     if location.user != request.user:
         return render(request, 'forbidden.html', status=403)
 
     if request.method == 'POST':
         location.delete()
-        return redirect('my_account')
+        return redirect('success')
 
     return render(request, 'delete_location.html', {'location': location})
 
@@ -280,8 +277,14 @@ def get_filtered_locations(request):
     """
     type_name = request.GET.get('type')
     if type_name:
-        locations = Location.objects.filter(type__name=type_name).values('latitude', 'longitude', 'type__name', 'notes', 'id')
+        locations = Location.objects.filter(type__name=type_name).values(
+            'latitude', 'longitude', 'type__name', 'notes', 'id')
     else:
-        locations = Location.objects.all().values('latitude', 'longitude', 'type__name', 'notes', 'id')
+        locations = Location.objects.all().values(
+            'latitude', 'longitude', 'type__name', 'notes', 'id')
 
     return JsonResponse(list(locations), safe=False)
+
+
+def success(request):
+    return render(request, 'success.html')

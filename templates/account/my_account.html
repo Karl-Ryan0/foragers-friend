@@ -25,11 +25,8 @@ Account | Forager's Friend
         <td>{{ location.latitude }} {{ location.longitude }}</td>
         <td>
           <a href="{% url 'edit_location' location.id %}" class="btn btn-primary">Edit</a>
-          <form id="delete_button" method="post" action="{% url 'delete_location' location.id %}"
-            style="display: inline;">
+          <a href="{% url 'delete_location' location.id %}" class="btn btn-danger">Delete</a>
             {% csrf_token %}
-            <button type="submit" class="btn btn-danger">Delete</button>
-          </form>
         </td>
       </tr>
       {% endfor %}

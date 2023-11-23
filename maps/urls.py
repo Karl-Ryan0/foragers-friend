@@ -27,4 +27,5 @@ urlpatterns = [
          remove_favorite, name='remove_favorite'),
     path('get_filtered_locations', get_filtered_locations,
          name='get_filtered_locations'),
+    path('success/', views.success, name='success'),
 ]
