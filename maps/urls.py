@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 from allauth.account.views import LoginView
-from .views import auth_success, remove_favorite, get_filtered_locations
+from .views import auth_success, remove_favorite, get_filtered_locations, account_deletion
 
 urlpatterns = [
     path("", views.homepage, name="home"),
@@ -28,4 +28,6 @@ urlpatterns = [
     path('get_filtered_locations', get_filtered_locations,
          name='get_filtered_locations'),
     path('success/', views.success, name='success'),
+    path('account-deletion/', account_deletion,
+         name='account_deletion'),
 ]

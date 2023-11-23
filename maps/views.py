@@ -231,7 +231,7 @@ def delete_account(request):
     if request.method == 'POST':
         request.user.delete()
         logout(request)
-        return redirect('home')
+        return redirect('account_deletion')
     else:
         return render(request, 'account/delete_account.html')
 
@@ -288,3 +288,7 @@ def get_filtered_locations(request):
 
 def success(request):
     return render(request, 'success.html')
+
+
+def account_deletion(request):
+    return render(request, 'account_deletion.html')
