@@ -8,11 +8,6 @@ Logout | Forager's Friend
     <div class="container">
         <h2>Logout Success</h2>
         <p>You have logged out successfully.</p>
-        <button id="return-button" class="btn btn-primary">Return to Homepage</button>
+        <a href="{% url 'home' %}" class="btn btn-primary">Return to Homepage</a>
     </div>
-    <script>
-        setTimeout(function() {
-            window.location.href = "{% url 'home' %}";
-        }, 5000);
-    </script>
 {% endblock %}

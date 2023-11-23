@@ -68,7 +68,7 @@ def location_data(request):
     Fetches all locations and returns them in a JSON format.
     """
     locations = Location.objects.all().select_related('type').values(
-        'latitude', 'longitude', 'notes', 'type', 'id'
+        'latitude', 'longitude', 'notes', 'type', 'verified', 'id'
     )
     location_list = list(locations)
     return JsonResponse(location_list, safe=False)
@@ -208,7 +208,6 @@ def edit_location(request, location_id):
                                                   form, 'location': location})
 
 
-@login_required
 @login_required
 def delete_location(request, location_id):
     location = get_object_or_404(Location, id=location_id)

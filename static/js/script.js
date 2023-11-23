@@ -19,7 +19,6 @@ mymap.locate({setView: true, maxZoom: 16, watch: false, enableHighAccuracy: true
 
 // Event when location is found
 mymap.on('locationfound', function(e) {
-    // Add a marker to the user's location
         userLocation = e.latlng;
 });
 
@@ -79,7 +78,7 @@ function fetchLocationsAndUpdateMap(url = '/location-data') {
             allMarkers = [];
 
             locations.forEach(location => {
-                let typeName, typeInfo;
+                let typeName, typeInfo, verifiedInfo;
 
                 if (location.type__name) {
                     typeName = location.type__name;
@@ -89,14 +88,17 @@ function fetchLocationsAndUpdateMap(url = '/location-data') {
                     typeName = typeInfo.name || 'Unknown Type';
                 }
 
+                verifiedInfo = location.verified ? "Verified" : "Not Verified";
+
                 let marker = L.marker([location.latitude, location.longitude], { icon: typeInfo.icon })
                               .addTo(mymap)
-                              .bindPopup(`<b>${typeName}</b><hr>${location.notes || 'No additional information available.'}<hr><button class="btn btn-primary" onclick="toggleFavorite(${location.id})">Add to Favorites</button>`);
+                              .bindPopup(`<b>${typeName}</b> - <em>${verifiedInfo}</em><hr>${location.notes || 'No additional information available.'}<hr><button class="btn btn-primary" onclick="toggleFavorite(${location.id})">Add to Favorites</button>`);
                 allMarkers.push(marker);
             });
         })
         .catch(error => console.error('Error fetching location data:', error));
 }
+
 
 
 // Call the function to update the map with initial data
