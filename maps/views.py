@@ -1,14 +1,12 @@
 from .forms import ContactForm
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import LocationForm, RegistrationForm, LocationEditForm
 from .models import Location, ContactMessage, LocationType
-from django.contrib.auth.views import LoginView
 from django.contrib.auth import login, logout
 from django.core.paginator import Paginator
-from django.http import JsonResponse, HttpResponseForbidden, HttpResponse
+from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Exists, OuterRef
 

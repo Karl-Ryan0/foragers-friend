@@ -62,11 +62,11 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 const typeMapping = {
-    1: { name: 'Strawberries', icon: L.icon({ iconUrl: 'static/media/images/strawberries.png', iconSize: [40, 60], iconAnchor: [12, 41], popupAnchor: [1, -34] }) },
-    2: { name: 'Blackberries', icon: L.icon({ iconUrl: 'static/media/images/blackberries.png', iconSize: [40, 60], iconAnchor: [12, 41], popupAnchor: [1, -34] }) },
-    3: { name: 'Elderberries', icon: L.icon({ iconUrl: 'static/media/images/elderberries.png', iconSize: [40, 60], iconAnchor: [12, 41], popupAnchor: [1, -34] }) },
-    4: { name: 'Garlic', icon: L.icon({ iconUrl: 'static/media/images/garlic.png', iconSize: [40, 60], iconAnchor: [12, 41], popupAnchor: [1, -34] }) },
-    5: { name: 'Nettles', icon: L.icon({ iconUrl: 'static/media/images/nettles.png', iconSize: [40, 60], iconAnchor: [12, 41], popupAnchor: [1, -34] }) },
+    1: { name: 'Strawberries', icon: L.icon({ iconUrl: staticBaseUrl + 'media/images/strawberries.png', iconSize: [40, 60], iconAnchor: [12, 41], popupAnchor: [1, -34] }) },
+    2: { name: 'Blackberries', icon: L.icon({ iconUrl: staticBaseUrl + 'media/images/blackberries.png', iconSize: [40, 60], iconAnchor: [12, 41], popupAnchor: [1, -34] }) },
+    3: { name: 'Elderberries', icon: L.icon({ iconUrl: staticBaseUrl + 'media/images/elderberries.png', iconSize: [40, 60], iconAnchor: [12, 41], popupAnchor: [1, -34] }) },
+    4: { name: 'Garlic', icon: L.icon({ iconUrl: staticBaseUrl + 'media/images/garlic.png', iconSize: [40, 60], iconAnchor: [12, 41], popupAnchor: [1, -34] }) },
+    5: { name: 'Nettles', icon: L.icon({ iconUrl: staticBaseUrl + 'media/images/nettles.png', iconSize: [40, 60], iconAnchor: [12, 41], popupAnchor: [1, -34] }) },
 };
 
 // Fetches a list of locations from the database and updates the map

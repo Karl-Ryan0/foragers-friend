@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}
 Home | Forager's Friend
@@ -50,5 +51,7 @@ Home | Forager's Friend
 <div id="mapbox">
     <div id="map"></div>
 </div>
-
+<script type="text/javascript">
+    var staticBaseUrl = "{% static '' %}";
+</script>
 {% endblock %}
