@@ -217,6 +217,14 @@ form button[type="submit"]:focus {
     text-align: center;
 }
 
+.verified-popup-style {
+    border-color: green !important;
+}
+
+.unverified-popup-style {
+    border-color: red !important;
+}
+
 .leaflet-popup-content-wrapper {
     color: #000;
     border: 1px solid #000;

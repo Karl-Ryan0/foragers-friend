@@ -78,7 +78,7 @@ function fetchLocationsAndUpdateMap(url = '/location-data') {
             allMarkers = [];
 
             locations.forEach(location => {
-                let typeName, typeInfo, verifiedInfo;
+                let typeName, typeInfo;
 
                 if (location.type__name) {
                     typeName = location.type__name;
@@ -88,17 +88,35 @@ function fetchLocationsAndUpdateMap(url = '/location-data') {
                     typeName = typeInfo.name || 'Unknown Type';
                 }
 
-                verifiedInfo = location.verified ? "Verified" : "Not Verified";
+                let popupClass = location.verified ? "verified-location" : "unverified-location";
+                let popupContent = `<div class="${popupClass}"><b>${typeName}</b> - <em>${location.verified ? "Verified" : "Not Verified"}</em><hr>${location.notes || 'No additional information available.'}<hr><button class="btn btn-primary" onclick="toggleFavorite(${location.id})">Add to Favorites</button></div>`;
 
                 let marker = L.marker([location.latitude, location.longitude], { icon: typeInfo.icon })
                               .addTo(mymap)
-                              .bindPopup(`<b>${typeName}</b> - <em>${verifiedInfo}</em><hr>${location.notes || 'No additional information available.'}<hr><button class="btn btn-primary" onclick="toggleFavorite(${location.id})">Add to Favorites</button>`);
+                              .bindPopup(popupContent);
+
+                              marker.on('popupopen', function() {
+                                let popupContainer = marker.getPopup()._container;
+                                if (popupContainer) {
+                            
+                                    let wrapperElement = popupContainer.querySelector('.leaflet-popup-content-wrapper');
+                            
+                                    if (wrapperElement) {
+                                        if (popupContainer.querySelector('.verified-location')) {
+                                            wrapperElement.classList.add('verified-popup-style');
+                                        } else if (popupContainer.querySelector('.unverified-location')) {
+                                            wrapperElement.classList.add('unverified-popup-style');
+                                        }
+                                    }
+                                }
+                            });
+                            
+
                 allMarkers.push(marker);
             });
         })
         .catch(error => console.error('Error fetching location data:', error));
 }
-
 
 
 // Call the function to update the map with initial data
