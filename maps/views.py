@@ -192,6 +192,10 @@ def edit_location(request, location_id):
     """
     location = get_object_or_404(Location, id=location_id)
 
+    # Check if the logged-in user is the one who created the location
+    if location.user != request.user:
+        return render(request, 'forbidden.html', status=403)
+
     if request.method == 'POST':
         form = LocationEditForm(request.POST, instance=location)
         if form.is_valid():
