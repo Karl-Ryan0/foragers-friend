@@ -92,7 +92,7 @@ function fetchLocationsAndUpdateMap(url = '/location-data') {
 
                 // Declare and define confirmButton within the loop
                 let confirmButton = '';
-                if (!location.verified) {
+                if (!location.verified && !location.is_confirmed_by_user) {
                     confirmButton = `<br><a class="btn btn-light" href="/confirm_location/${location.id}/">Confirm Location</a>`;
                 }
             

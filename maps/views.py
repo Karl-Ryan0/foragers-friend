@@ -10,6 +10,7 @@ from django.contrib.auth import login, logout
 from django.core.paginator import Paginator
 from django.http import JsonResponse, HttpResponseForbidden, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.db.models import Exists, OuterRef
 
 
 def homepage(request):
@@ -64,11 +65,22 @@ def add_item(request):
 def location_data(request):
     """
     Return a JSON response with location data.
-
-    Fetches all locations and returns them in a JSON format.
     """
-    locations = Location.objects.all().select_related('type').values(
-        'latitude', 'longitude', 'notes', 'type', 'verified', 'id'
+    if request.user.is_authenticated:
+        locations = Location.objects.all().select_related('type').annotate(
+            is_confirmed_by_user=Exists(
+                Location.confirmed_by.through.objects.filter(
+                    location_id=OuterRef('pk'),
+                    user_id=request.user.id
+                )
+            )
+        )
+    else:
+        locations = Location.objects.all().select_related('type')
+
+    locations = locations.values(
+        'latitude', 'longitude', 'notes', 'type',
+        'verified', 'id', 'is_confirmed_by_user'
     )
     location_list = list(locations)
     return JsonResponse(location_list, safe=False)
