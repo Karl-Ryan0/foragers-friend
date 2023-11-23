@@ -297,7 +297,6 @@ def account_deletion(request):
 def confirm_location(request, location_id):
     location = get_object_or_404(Location, id=location_id)
     user = request.user
-    debug_info = []
 
     if user not in location.confirmed_by.all():
         location.confirmed_by.add(user)

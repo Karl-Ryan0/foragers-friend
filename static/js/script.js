@@ -15,15 +15,15 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(mymap);
 
 // Attempt to get the user's current position
-mymap.locate({setView: true, maxZoom: 16, watch: false, enableHighAccuracy: true});
+mymap.locate({ setView: true, maxZoom: 16, watch: false, enableHighAccuracy: true });
 
 // Event when location is found
-mymap.on('locationfound', function(e) {
-        userLocation = e.latlng;
+mymap.on('locationfound', function (e) {
+    userLocation = e.latlng;
 });
 
 // Event when location is not found (or access is denied)
-mymap.on('locationerror', function(e) {
+mymap.on('locationerror', function (e) {
     // Set a default view if we can't get the user's location
     mymap.setView([53.608, -6.191], 13);
 });
@@ -57,7 +57,7 @@ document.querySelector('#id_latitude').value = urlParams.get('latitude');
 document.querySelector('#id_longitude').value = urlParams.get('longitude');
 
 // Update the year dynamically
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('current-year').textContent = new Date().getFullYear();
 });
 
@@ -89,38 +89,44 @@ function fetchLocationsAndUpdateMap(url = '/location-data') {
                 }
 
                 let popupClass = location.verified ? "verified-location" : "unverified-location";
-                let popupContent = `
-                <div class="${popupClass}">
-                    <b>${typeName}</b> - <em>${location.verified ? "Verified" : "Not Verified"}</em>
-                    <hr>
-                    ${location.notes || 'No additional information available.'}
-                    <hr>
-                    <button class="btn btn-primary" onclick="toggleFavorite(${location.id})">Add to Favorites</button>
-                    <br>
-                    <a class="btn btn-light" href="/confirm_location/${location.id}/">Confirm Location</a>
-                </div>`;
+
+                // Declare and define confirmButton within the loop
+                let confirmButton = '';
+                if (!location.verified) {
+                    confirmButton = `<br><a class="btn btn-light" href="/confirm_location/${location.id}/">Confirm Location</a>`;
+                }
             
+                let popupContent = `
+                    <div class="${popupClass}">
+                        <b>${typeName}</b> - <em>${location.verified ? "Verified" : "Not Verified"}</em>
+                        <hr>
+                        ${location.notes || 'No additional information available.'}
+                        <hr>
+                        <button class="btn btn-primary" onclick="toggleFavorite(${location.id})">Add to Favorites</button>
+                        ${confirmButton}
+                    </div>`;
+
 
                 let marker = L.marker([location.latitude, location.longitude], { icon: typeInfo.icon })
-                              .addTo(mymap)
-                              .bindPopup(popupContent);
+                    .addTo(mymap)
+                    .bindPopup(popupContent);
 
-                              marker.on('popupopen', function() {
-                                let popupContainer = marker.getPopup()._container;
-                                if (popupContainer) {
-                            
-                                    let wrapperElement = popupContainer.querySelector('.leaflet-popup-content-wrapper');
-                            
-                                    if (wrapperElement) {
-                                        if (popupContainer.querySelector('.verified-location')) {
-                                            wrapperElement.classList.add('verified-popup-style');
-                                        } else if (popupContainer.querySelector('.unverified-location')) {
-                                            wrapperElement.classList.add('unverified-popup-style');
-                                        }
-                                    }
-                                }
-                            });
-                            
+                marker.on('popupopen', function () {
+                    let popupContainer = marker.getPopup()._container;
+                    if (popupContainer) {
+
+                        let wrapperElement = popupContainer.querySelector('.leaflet-popup-content-wrapper');
+
+                        if (wrapperElement) {
+                            if (popupContainer.querySelector('.verified-location')) {
+                                wrapperElement.classList.add('verified-popup-style');
+                            } else if (popupContainer.querySelector('.unverified-location')) {
+                                wrapperElement.classList.add('unverified-popup-style');
+                            }
+                        }
+                    }
+                });
+
 
                 allMarkers.push(marker);
             });
@@ -140,17 +146,17 @@ function toggleFavorite(locationId) {
             'Content-Type': 'application/json',
         },
     })
-    .then(response => {
-        if (response.ok) {
-            return response.json();
-        } else {
-            throw new Error('Network response was not ok.');
-        }
-    })
-    .then(data => {
-        console.log('Favorite status toggled', data);
-    })
-    .catch(error => console.error('Error toggling favorite:', error));
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Network response was not ok.');
+            }
+        })
+        .then(data => {
+            console.log('Favorite status toggled', data);
+        })
+        .catch(error => console.error('Error toggling favorite:', error));
 }
 
 function filterMapByType() {
@@ -161,7 +167,7 @@ function filterMapByType() {
     fetchLocationsAndUpdateMap(filterUrl);
 }
 
-document.getElementById('add-location-btn').addEventListener('click', function() {
+document.getElementById('add-location-btn').addEventListener('click', function () {
     if (userLocation) {
         let lat = userLocation.lat.toFixed(3);
         let lon = userLocation.lng.toFixed(3);
