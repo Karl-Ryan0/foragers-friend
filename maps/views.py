@@ -213,7 +213,7 @@ def delete_location(request, location_id):
 
     # Check if the logged-in user is the one who created the location
     if location.user != request.user:
-        return HttpResponseForbidden("You are not allowed to delete this location.")
+        return render(request, 'forbidden.html', status=403)
 
     if request.method == 'POST':
         location.delete()

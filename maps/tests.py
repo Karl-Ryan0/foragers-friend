@@ -1,12 +1,15 @@
-from django.test import TestCase, Client
+from django.test import TestCase
 from django.contrib.auth.models import User
 from .models import Location, LocationType
+
 
 class LocationDeletionTests(TestCase):
     def setUp(self):
         # Creating test users
-        self.user1 = User.objects.create_user('user1', 'user1@example.com', 'password1')
-        self.user2 = User.objects.create_user('user2', 'user2@example.com', 'password2')
+        self.user1 = User.objects.create_user(
+            'user1', 'user1@example.com', 'password1')
+        self.user2 = User.objects.create_user(
+            'user2', 'user2@example.com', 'password2')
 
         # Creating a LocationType instance
         location_type = LocationType.objects.create(name='TestType')

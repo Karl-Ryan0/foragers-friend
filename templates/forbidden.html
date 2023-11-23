@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}
+Forbidden
+{% endblock %}
+
+{% block content %}
+<!-- Custom Forbidden page -->
+<div class="container mt-5">
+    <h1>Forbidden</h1>
+    <p>You can only delete your own locations.</p>
+    <a href="{% url 'home' %}" class="btn btn-primary">Return to Homepage</a>
+</div>
+{% endblock %}
