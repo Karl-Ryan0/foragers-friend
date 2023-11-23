@@ -3,12 +3,12 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import LocationForm, ContactForm, RegistrationForm, LocationEditForm
+from .forms import LocationForm, RegistrationForm, LocationEditForm
 from .models import Location, ContactMessage, LocationType
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import login, logout
 from django.core.paginator import Paginator
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseForbidden
 from django.views.decorators.csrf import csrf_exempt
 
 
@@ -204,11 +204,16 @@ def edit_location(request, location_id):
                                                   form, 'location': location})
 
 
+@login_required
 def delete_location(request, location_id):
     """
     Handle deleting of a specific location.
     """
     location = get_object_or_404(Location, id=location_id)
+
+    # Check if the logged-in user is the one who created the location
+    if location.user != request.user:
+        return HttpResponseForbidden("You are not allowed to delete this location.")
 
     if request.method == 'POST':
         location.delete()
@@ -254,6 +259,7 @@ def toggle_favorite(request, location_id):
                              'Invalid request'}, status=400)
 
 
+@login_required
 def remove_favorite(request, location_id):
     """
     Handles users removing favorite items from account page.
@@ -265,6 +271,9 @@ def remove_favorite(request, location_id):
 
 
 def get_filtered_locations(request):
+    """
+    Handles users attempting to filter to a certain location type.
+    """
     type_name = request.GET.get('type')
     if type_name:
         locations = Location.objects.filter(type__name=type_name).values('latitude', 'longitude', 'type__name', 'notes', 'id')
