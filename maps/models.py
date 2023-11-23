@@ -45,6 +45,8 @@ class Location(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     favorited_by = models.ManyToManyField(
         User, related_name='favorite_locations', blank=True)
+    confirmed_by = models.ManyToManyField(
+        User, related_name='confirmed_locations')
 
     def __str__(self):
         return self.notes[:50]

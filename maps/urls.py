@@ -30,4 +30,6 @@ urlpatterns = [
     path('success/', views.success, name='success'),
     path('account-deletion/', account_deletion,
          name='account_deletion'),
+    path('confirm_location/<int:location_id>/',
+         views.confirm_location, name='confirm_location'),
 ]

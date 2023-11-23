@@ -8,7 +8,7 @@ from .models import Location, ContactMessage, LocationType
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import login, logout
 from django.core.paginator import Paginator
-from django.http import JsonResponse, HttpResponseForbidden
+from django.http import JsonResponse, HttpResponseForbidden, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
 
@@ -291,3 +291,21 @@ def success(request):
 
 def account_deletion(request):
     return render(request, 'account_deletion.html')
+
+
+@login_required
+def confirm_location(request, location_id):
+    location = get_object_or_404(Location, id=location_id)
+    user = request.user
+    debug_info = []
+
+    if user not in location.confirmed_by.all():
+        location.confirmed_by.add(user)
+
+    confirmations_count = location.confirmed_by.count()
+
+    if confirmations_count >= 5:
+        location.verified = True
+        location.save()
+
+    return redirect('home')

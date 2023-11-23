@@ -89,7 +89,17 @@ function fetchLocationsAndUpdateMap(url = '/location-data') {
                 }
 
                 let popupClass = location.verified ? "verified-location" : "unverified-location";
-                let popupContent = `<div class="${popupClass}"><b>${typeName}</b> - <em>${location.verified ? "Verified" : "Not Verified"}</em><hr>${location.notes || 'No additional information available.'}<hr><button class="btn btn-primary" onclick="toggleFavorite(${location.id})">Add to Favorites</button></div>`;
+                let popupContent = `
+                <div class="${popupClass}">
+                    <b>${typeName}</b> - <em>${location.verified ? "Verified" : "Not Verified"}</em>
+                    <hr>
+                    ${location.notes || 'No additional information available.'}
+                    <hr>
+                    <button class="btn btn-primary" onclick="toggleFavorite(${location.id})">Add to Favorites</button>
+                    <br>
+                    <a class="btn btn-light" href="/confirm_location/${location.id}/">Confirm Location</a>
+                </div>`;
+            
 
                 let marker = L.marker([location.latitude, location.longitude], { icon: typeInfo.icon })
                               .addTo(mymap)
