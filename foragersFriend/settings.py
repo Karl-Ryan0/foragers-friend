@@ -31,7 +31,7 @@ CSRF_TRUSTED_ORIGINS = [
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = os.environ.get('DEBUG', False)
 
 ALLOWED_HOSTS = ['8000-karlryan0-foragersfrien-ardtm131x7a.ws-eu106.gitpod.io',
                  'localhost', 'foragers-friend-5b6ca9d8e935.herokuapp.com']
